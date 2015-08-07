@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class TaskListActivity extends Activity {
@@ -30,7 +31,8 @@ public class TaskListActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_sync) {
+            Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_SHORT).show();
             return true;
         }
 
