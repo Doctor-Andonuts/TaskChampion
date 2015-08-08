@@ -39,7 +39,7 @@ public class TaskListActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sync) {
-            new TaskWarriorSync().execute();
+            new TaskWarriorSync().execute(getBaseContext());
             Toast.makeText(getApplicationContext(), "Attempting Sync...", Toast.LENGTH_SHORT).show();
             return true;
         }
