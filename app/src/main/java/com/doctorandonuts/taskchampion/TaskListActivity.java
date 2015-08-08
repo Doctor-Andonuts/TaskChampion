@@ -1,10 +1,17 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
+
+import org.json.JSONObject;
 
 
 public class TaskListActivity extends Activity {
@@ -32,7 +39,8 @@ public class TaskListActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sync) {
-            Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_SHORT).show();
+            new TaskWarriorSync().execute();
+            Toast.makeText(getApplicationContext(), "Attempting Sync...", Toast.LENGTH_SHORT).show();
             return true;
         }
 
