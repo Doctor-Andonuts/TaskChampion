@@ -39,7 +39,7 @@ public class Msg {
         for (final Map.Entry<String, String> entry : this._header.entrySet()) {
             output.append(entry.getKey() + ": " + entry.getValue() + '\n');
         }
-        output.append('\n' + this._payload + '\n');
+        output.append("\n\n" + this._payload + '\n');
         return output.toString();
     }
 
