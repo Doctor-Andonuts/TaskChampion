@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by Mr Saturn on 8/7/2015 for TaskChampion
  */
@@ -27,25 +29,71 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+
+        // This sets the sync key to nothing to make sure I can keep testing
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("syncKey", "");
+        editor.commit();
+
+
         String syncKey = sharedPref.getString("syncKey", "");
+        Log.d(TAG, "Getting sync key: " + syncKey);
 
         final Msg sync = new Msg();
-        sync.setHeader("protocol", "v1");
-        sync.setHeader("type", "sync");
-        sync.setHeader("org", "Main");
-        sync.setHeader("user", "Doctor Andonuts");
-        sync.setHeader("key", "cf5a3fa3-5508-4e28-9497-5b44113d45a8");
+        sync.clear();
         final StringBuilder payload = new StringBuilder();
+        payload.append(syncKey);
         sync.setPayload(payload.toString());
+        sync.serialize();
 
-        return sync.serialize();
+        TLSClient tlsClient = new TLSClient();
+        try {
+            tlsClient.init(cert.ca_cert, cert.Andonuts_cert, cert.Andonuts_key);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+        try {
+            tlsClient.connect(cert.server, cert.port);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        tlsClient.send(sync.serialize());
+        final String response = tlsClient.recv();
+        tlsClient.close();
+
+        try {
+            sync.parse(response);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        return sync.getPayload();
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        Log.d(TAG, s);
+    protected void onPostExecute(String payloadData) {
+        super.onPostExecute(payloadData);
+
+        String newSyncKey = "";
+
+        String[] splitData = payloadData.split("\n");
+        for(Integer i=0; i<splitData.length; i++) {
+            if(Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", splitData[i])) {
+                newSyncKey = splitData[i];
+                Log.d(TAG, "NEW SYNC KEY #" + i + ": " + splitData[i]);
+            } else {
+                Log.d(TAG, "#" + i + ": " + splitData[i]);
+            }
+        }
+
+        if(!newSyncKey.equals("")) {
+            SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("syncKey", newSyncKey);
+            editor.commit();
+        }
+
         Log.d(TAG, "DONE");
-        Toast.makeText(_context, s, Toast.LENGTH_SHORT).show();
     }
 }

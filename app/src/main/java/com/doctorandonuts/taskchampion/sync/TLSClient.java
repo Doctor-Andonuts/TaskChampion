@@ -235,7 +235,7 @@ public class TLSClient {
             }
         }
         try {
-            Log.d(TAG, "connected to " + host + ':' + port);
+            Log.d(TAG, "connecting to " + host + ':' + port);
             this._socket = (SSLSocket) this.sslFact.createSocket();
             setReasonableEncryption(this._socket);
             this._socket.setUseClientMode(true);

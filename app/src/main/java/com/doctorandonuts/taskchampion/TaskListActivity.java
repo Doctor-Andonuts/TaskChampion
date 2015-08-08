@@ -40,10 +40,12 @@ public class TaskListActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sync) {
-            TaskWarriorSync taskWarriorSync = new TaskWarriorSync(getBaseContext());
-            taskWarriorSync.execute();
             Log.d("TaskWarriorSync", "Attempting Sync...");
             Toast.makeText(getApplicationContext(),"Attempting Sync...", Toast.LENGTH_SHORT).show();
+
+            TaskWarriorSync taskWarriorSync = new TaskWarriorSync(getBaseContext());
+            taskWarriorSync.execute();
+
             return true;
         }
 
