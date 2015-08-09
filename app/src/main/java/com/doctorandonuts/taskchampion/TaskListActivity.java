@@ -1,6 +1,7 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
 
 import org.json.JSONObject;
+
+import java.util.regex.Pattern;
 
 
 public class TaskListActivity extends Activity {

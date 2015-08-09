@@ -22,11 +22,6 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
     private Cert cert = new Cert();
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
     protected String doInBackground(Void... params) {
         SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
 
@@ -75,8 +70,8 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String payloadData) {
         super.onPostExecute(payloadData);
 
+        // Checks for new sync key
         String newSyncKey = "";
-
         String[] splitData = payloadData.split("\n");
         for(Integer i=0; i<splitData.length; i++) {
             if(Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", splitData[i])) {
@@ -87,12 +82,15 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
             }
         }
 
+        // Stores new sync key if there was one
         if(!newSyncKey.equals("")) {
             SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("syncKey", newSyncKey);
             editor.commit();
         }
+
+
 
         Log.d(TAG, "DONE");
     }
