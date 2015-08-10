@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.doctorandonuts.taskchampion.TaskList;
 import com.doctorandonuts.taskchampion.TaskListActivity;
 
 import java.util.regex.Pattern;
@@ -28,6 +29,11 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
+        TaskList taskList = new TaskList(_context);
+        taskList.writePendingFile();
+        taskList.readPendingFile();
+
+
         SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
 
         // This sets the sync key to nothing to make sure I can keep testing

@@ -40,8 +40,6 @@ public class TaskListFragment extends ListFragment {
         oldTitles[0] = "NEW Henry IV";
         oldTitles[1] = "NEW Henry V";
         oldTitles[2] = "NEW Henry VIII";
-        //arrayAdapter.notifyDataSetChanged();
-        //((ArrayAdapter)this.getListAdapter()).notifyDataSetChanged();
         Log.d("FragmentList", "DATA REFRESH");
     }
 }
