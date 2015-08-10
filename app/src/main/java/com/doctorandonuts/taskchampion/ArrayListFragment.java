@@ -11,12 +11,24 @@ import android.widget.ListView;
  * Created by Mr Saturn on 8/9/2015 for TaskChampion
  */
 public class ArrayListFragment extends ListFragment {
+    private ArrayAdapter<String> arrayAdapter;
+    public String[] oldTitles =
+            {
+                    "Henry IV",
+                    "Henry V",
+                    "Henry VIII",
+                    "Richard II",
+                    "Richard III",
+                    "Merchant of Venice",
+                    "Othello",
+                    "King Lear"
+            };
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, Shakespeare.TITLES));
+        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, oldTitles);
+        setListAdapter(arrayAdapter);
     }
 
     @Override
@@ -25,6 +37,11 @@ public class ArrayListFragment extends ListFragment {
     }
 
     public void refreshData() {
+        oldTitles[0] = "NEW Henry IV";
+        oldTitles[1] = "NEW Henry V";
+        oldTitles[2] = "NEW Henry VIII";
+        //arrayAdapter.notifyDataSetChanged();
+        //((ArrayAdapter)this.getListAdapter()).notifyDataSetChanged();
         Log.d("FragmentList", "DATA REFRESH");
     }
 }
