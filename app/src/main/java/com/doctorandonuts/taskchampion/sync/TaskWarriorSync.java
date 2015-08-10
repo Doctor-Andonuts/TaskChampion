@@ -90,8 +90,6 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
             editor.commit();
         }
 
-
-
         Log.d(TAG, "DONE");
     }
 }

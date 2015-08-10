@@ -23,7 +23,12 @@ public class TaskListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
+        //setContentView(R.layout.activity_task_list);
+
+        if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
+            ArrayListFragment list = new ArrayListFragment();
+            getFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
+        }
     }
 
 
@@ -48,6 +53,9 @@ public class TaskListActivity extends Activity {
 
             TaskWarriorSync taskWarriorSync = new TaskWarriorSync(getBaseContext());
             taskWarriorSync.execute();
+
+            ArrayListFragment list = new ArrayListFragment();
+            list.refreshData();
 
             return true;
         }
