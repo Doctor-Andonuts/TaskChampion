@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.doctorandonuts.taskchampion.TaskListActivity;
 
 import java.util.regex.Pattern;
 
@@ -13,10 +14,14 @@ import java.util.regex.Pattern;
  */
 public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
+    private TaskListActivity _taskListActivity;
+
     private String TAG = "TaskWarriorSync";
     private Context _context;
-    public TaskWarriorSync (Context context) {
-        _context = context;
+    public TaskWarriorSync (TaskListActivity taskListActivity) {
+        _taskListActivity = taskListActivity;
+        _context = taskListActivity.getBaseContext();
+
     }
 
     private Cert cert = new Cert();
@@ -89,6 +94,9 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
             editor.putString("syncKey", newSyncKey);
             editor.commit();
         }
+
+        _taskListActivity.refreshTaskListFragment();
+
 
         Log.d(TAG, "DONE");
     }

@@ -10,7 +10,7 @@ import android.widget.ListView;
 /**
  * Created by Mr Saturn on 8/9/2015 for TaskChampion
  */
-public class ArrayListFragment extends ListFragment {
+public class TaskListFragment extends ListFragment {
     private ArrayAdapter<String> arrayAdapter;
     public String[] oldTitles =
             {
