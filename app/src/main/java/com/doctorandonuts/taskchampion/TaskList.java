@@ -6,7 +6,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import android.util.Log;
@@ -62,16 +65,36 @@ public class TaskList {
             }
         }
 
+        Log.d(TAG, arraylistToString(_pending));
+    }
+
+    private String arraylistToString(ArrayList<JSONObject> arrayList) {
+        String returnString = "";
+        for (JSONObject listItem : arrayList) {
+            returnString += listItem.toString() + "\n";
+        }
+
+        return returnString;
     }
 
 
     private void addTask(JSONObject taskToAdd) {
         Boolean taskFound = false;
-        for( JSONObject pendingTask : _pending) {
+        for(Integer i=0; i<_pending.size(); i++) {
             try {
-                if(pendingTask.getString("uuid").equals(taskToAdd.getString("uuid"))) {
-                    Log.d(TAG, "Pending: " + pendingTask.getString("modified"));
-                    Log.d(TAG, "New: " + taskToAdd.getString("modified"));
+                if(_pending.get(i).getString("uuid").equals(taskToAdd.getString("uuid"))) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                    Date currentTaskDate = sdf.parse(_pending.get(i).getString("modified"));
+                    Date newTaskDate = sdf.parse(taskToAdd.getString("modified"));
+
+                    //Log.d(TAG, "Pending: " + _pending.get(i).getString("modified"));
+                    //Log.d(TAG, "New: " + taskToAdd.getString("modified"));
+
+                    if(newTaskDate.after(currentTaskDate)) {
+                        _pending.set(i, taskToAdd);
+                    }
+
+                    //Log.d(TAG, "----");
                 }
             } catch(Exception e) {
                 Log.d(TAG, e.toString());
