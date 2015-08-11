@@ -16,7 +16,6 @@ public class TaskListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_task_list);
 
         if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
             TaskListFragment list = new TaskListFragment();

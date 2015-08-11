@@ -30,7 +30,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         TaskList taskList = new TaskList(_context);
-        taskList.writePendingFile();
+        taskList.writePendingFile("{\"description\": \"Test Data\"}\n{\"description\": \"Other Data\"}");
         taskList.readPendingFile();
 
 

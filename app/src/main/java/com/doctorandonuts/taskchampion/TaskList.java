@@ -38,11 +38,10 @@ public class TaskList {
         }
     }
 
-    public void writePendingFile() {
+    public void writePendingFile(String taskPendingData) {
         try {
-
             FileOutputStream fileOutputStream = _context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fileOutputStream.write("test".getBytes());
+            fileOutputStream.write(taskPendingData.getBytes());
             fileOutputStream.close();
             Log.d("TaskListFile", "Writing done");
         } catch (Exception e) {
