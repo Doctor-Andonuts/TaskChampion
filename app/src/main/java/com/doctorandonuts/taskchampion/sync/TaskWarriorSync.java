@@ -29,11 +29,6 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        TaskList taskList = new TaskList(_context);
-        taskList.writePendingFile("{\"description\": \"Test Data\"}\n{\"description\": \"Other Data\"}");
-        taskList.readPendingFile();
-
-
         SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
 
         // This sets the sync key to nothing to make sure I can keep testing
@@ -41,9 +36,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         editor.putString("syncKey", "");
         editor.commit();
 
-
         String syncKey = sharedPref.getString("syncKey", "");
-        Log.d(TAG, "Getting sync key: " + syncKey);
 
         final Msg sync = new Msg();
         sync.clear();
@@ -81,15 +74,18 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String payloadData) {
         super.onPostExecute(payloadData);
 
+        TaskList taskList = new TaskList(_context);
+        taskList.importPayload(payloadData);
+
         // Checks for new sync key
         String newSyncKey = "";
         String[] splitData = payloadData.split("\n");
         for(Integer i=0; i<splitData.length; i++) {
             if(Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", splitData[i])) {
                 newSyncKey = splitData[i];
-                Log.d(TAG, "NEW SYNC KEY #" + i + ": " + splitData[i]);
+                //Log.d(TAG, "NEW SYNC KEY #" + i + ": " + splitData[i]);
             } else {
-                Log.d(TAG, "#" + i + ": " + splitData[i]);
+                //Log.d(TAG, "#" + i + ": " + splitData[i]);
             }
         }
 
@@ -102,7 +98,6 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         }
 
         _taskListActivity.refreshTaskListFragment();
-
 
         Log.d(TAG, "DONE");
     }
