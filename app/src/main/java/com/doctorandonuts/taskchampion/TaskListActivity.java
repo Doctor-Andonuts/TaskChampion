@@ -53,6 +53,9 @@ public class TaskListActivity extends Activity {
             taskWarriorSync.execute();
 
             return true;
+        } else if (id == R.id.action_clear_file) {
+            TaskList taskList = new TaskList(this);
+            taskList.writePendingFile("");
         }
 
         return super.onOptionsItemSelected(item);

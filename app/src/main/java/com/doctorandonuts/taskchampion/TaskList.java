@@ -31,8 +31,6 @@ public class TaskList {
     }
 
     private void readPendingFile() {
-        writePendingFile("");
-
         try {
             File file = new File(_context.getFilesDir(), FILENAME);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -65,7 +63,7 @@ public class TaskList {
             }
         }
 
-        Log.d(TAG, arraylistToString(_pending));
+        writePendingFile(arraylistToString(_pending));
     }
 
     private String arraylistToString(ArrayList<JSONObject> arrayList) {
@@ -83,6 +81,7 @@ public class TaskList {
         for(Integer i=0; i<_pending.size(); i++) {
             try {
                 if(_pending.get(i).getString("uuid").equals(taskToAdd.getString("uuid"))) {
+                    taskFound = true;
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
                     Date currentTaskDate = sdf.parse(_pending.get(i).getString("modified"));
                     Date newTaskDate = sdf.parse(taskToAdd.getString("modified"));
