@@ -10,6 +10,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import android.util.Log;
@@ -30,6 +31,23 @@ public class TaskList {
         _context = context;
     }
 
+
+    public List<String> getDescriptionList() {
+        readPendingFile();
+        List<String> results = new ArrayList<>();
+
+        for ( JSONObject taskJson : _pending ) {
+            try {
+                results.add(taskJson.getString("description"));
+            } catch (Exception e) {
+                Log.d(TAG, "getDescription: " + e.toString());
+            }
+        }
+
+        return results;
+    }
+
+
     private void readPendingFile() {
         try {
             File file = new File(_context.getFilesDir(), FILENAME);
@@ -37,7 +55,7 @@ public class TaskList {
             String line;
 
             while((line = bufferedReader.readLine()) != null) {
-                Log.d("TaskListFile", line);
+                //Log.d("TaskListFile", line);
                 JSONObject jsonLine = new JSONObject(line);
                 _pending.add(jsonLine);
             }
@@ -49,6 +67,7 @@ public class TaskList {
     }
 
     public void importPayload(String payloadData) {
+        Log.d(TAG, "trying import");
         readPendingFile();
 
         String[] splitData = payloadData.split("\n");
@@ -63,6 +82,7 @@ public class TaskList {
             }
         }
 
+        Log.d(TAG, "trying write");
         writePendingFile(arraylistToString(_pending));
     }
 
@@ -103,10 +123,6 @@ public class TaskList {
             _pending.add(taskToAdd);
         }
     }
-
-
-
-
 
 
     public void writePendingFile(String taskPendingData) {

@@ -7,26 +7,24 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Mr Saturn on 8/9/2015 for TaskChampion
  */
 public class TaskListFragment extends ListFragment {
     private ArrayAdapter<String> arrayAdapter;
-    public String[] oldTitles =
-            {
-                    "Henry IV",
-                    "Henry V",
-                    "Henry VIII",
-                    "Richard II",
-                    "Richard III",
-                    "Merchant of Venice",
-                    "Othello",
-                    "King Lear"
-            };
+    public List<String> oldTitles = new ArrayList<>();
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        refreshData();
+
         arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, oldTitles);
         setListAdapter(arrayAdapter);
     }
@@ -37,9 +35,12 @@ public class TaskListFragment extends ListFragment {
     }
 
     public void refreshData() {
-        oldTitles[0] = "NEW Henry IV";
-        oldTitles[1] = "NEW Henry V";
-        oldTitles[2] = "NEW Henry VIII";
+        TaskList taskList = new TaskList(getActivity());
+        oldTitles = taskList.getDescriptionList();
         Log.d("FragmentList", "DATA REFRESH");
+    }
+
+    public void clearData() {
+        oldTitles.clear();
     }
 }

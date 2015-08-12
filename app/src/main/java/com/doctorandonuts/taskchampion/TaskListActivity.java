@@ -56,6 +56,11 @@ public class TaskListActivity extends Activity {
         } else if (id == R.id.action_clear_file) {
             TaskList taskList = new TaskList(this);
             taskList.writePendingFile("");
+
+            TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
+            fragment.clearData();
+            ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
+            adapter.notifyDataSetChanged();
         }
 
         return super.onOptionsItemSelected(item);
