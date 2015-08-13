@@ -34,7 +34,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         TextView secondLine_textView = (TextView) rowView.findViewById(R.id.secondLine);
         firstLine_textView.setText(tasks.get(position).getDescription());
         secondLine_textView.setText(tasks.get(position).getUuid());
-        // change the icon for Windows and iPhone
 
         return rowView;
     }
