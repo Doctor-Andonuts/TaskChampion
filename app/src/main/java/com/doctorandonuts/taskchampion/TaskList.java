@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,19 +31,19 @@ public class TaskList {
     }
 
 
-    public List<String> getDescriptionList() {
+    public List<String> getDescriptionList(List<String> descriptionList) {
         readPendingFile();
-        List<String> results = new ArrayList<>();
+        descriptionList.clear();
 
         for ( JSONObject taskJson : _pending ) {
             try {
-                results.add(taskJson.getString("description"));
+                descriptionList.add(taskJson.getString("description"));
             } catch (Exception e) {
                 Log.d(TAG, "getDescription: " + e.toString());
             }
         }
 
-        return results;
+        return descriptionList;
     }
 
 

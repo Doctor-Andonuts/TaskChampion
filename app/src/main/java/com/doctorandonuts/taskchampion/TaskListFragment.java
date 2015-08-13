@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class TaskListFragment extends ListFragment {
     private ArrayAdapter<String> arrayAdapter;
-    public List<String> oldTitles = new ArrayList<>();
+    private List<String> descriptions = new ArrayList<>();
 
 
 
@@ -25,7 +25,7 @@ public class TaskListFragment extends ListFragment {
 
         refreshData();
 
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, oldTitles);
+        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, descriptions);
         setListAdapter(arrayAdapter);
     }
 
@@ -36,11 +36,11 @@ public class TaskListFragment extends ListFragment {
 
     public void refreshData() {
         TaskList taskList = new TaskList(getActivity());
-        oldTitles = taskList.getDescriptionList();
+        descriptions = taskList.getDescriptionList(descriptions);
         Log.d("FragmentList", "DATA REFRESH");
     }
 
     public void clearData() {
-        oldTitles.clear();
+        descriptions.clear();
     }
 }
