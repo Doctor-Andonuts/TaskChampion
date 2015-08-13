@@ -8,24 +8,20 @@ import org.json.JSONObject;
  * Created by jgowing on 8/13/2015.
  */
 public class Task {
-    private String description;
-    private String uuid;
+    private JSONObject taskJson;
     private String TAG = "TaskClass";
 
     public Task(JSONObject taskJson) {
+        this.taskJson = taskJson;
+    }
+
+    public String getValue(String key) {
+        String value = "ERROR";
         try {
-            this.description = taskJson.getString("description");
-            this.uuid = taskJson.getString("uuid");
+            value = taskJson.getString(key);
         } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getUuid() {
-        return uuid;
+        return value;
     }
 }

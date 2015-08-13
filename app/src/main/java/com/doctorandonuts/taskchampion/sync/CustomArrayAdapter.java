@@ -32,8 +32,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         View rowView = inflater.inflate(R.layout.task_list_item, parent, false);
         TextView firstLine_textView = (TextView) rowView.findViewById(R.id.firstLine);
         TextView secondLine_textView = (TextView) rowView.findViewById(R.id.secondLine);
-        firstLine_textView.setText(tasks.get(position).getDescription());
-        secondLine_textView.setText(tasks.get(position).getUuid());
+        firstLine_textView.setText(tasks.get(position).getValue("description"));
+        secondLine_textView.setText(tasks.get(position).getValue("uuid"));
 
         return rowView;
     }
