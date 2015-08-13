@@ -31,19 +31,20 @@ public class TaskList {
     }
 
 
-    public List<String> getDescriptionList(List<String> descriptionList) {
+    public List<Task> getDescriptionList(List<Task> taskList) {
         readPendingFile();
-        descriptionList.clear();
+        taskList.clear();
 
         for ( JSONObject taskJson : _pending ) {
             try {
-                descriptionList.add(taskJson.getString("description"));
+                Task task = new Task(taskJson);
+                taskList.add(task);
             } catch (Exception e) {
                 Log.d(TAG, "getDescription: " + e.toString());
             }
         }
 
-        return descriptionList;
+        return taskList;
     }
 
 
