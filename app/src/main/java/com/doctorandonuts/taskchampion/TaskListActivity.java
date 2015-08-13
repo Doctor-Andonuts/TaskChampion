@@ -43,12 +43,6 @@ public class TaskListActivity extends Activity {
             Log.d("TaskWarriorSync", "Attempting Sync...");
             Toast.makeText(getApplicationContext(),"Attempting Sync...", Toast.LENGTH_SHORT).show();
 
-            // TODO: Load the data from file if it can find any
-            // DONE: Load sync data from taskd server
-            // TODO: Parse the data returned and combine it with the file
-            // TODO: Save the file
-            // DONE: Tell the list fragment to do a refresh after async completes which will parse back from file and load the list again
-
             TaskWarriorSync taskWarriorSync = new TaskWarriorSync(this);
             taskWarriorSync.execute();
 

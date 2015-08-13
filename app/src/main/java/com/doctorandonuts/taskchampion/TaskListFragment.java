@@ -18,7 +18,6 @@ public class TaskListFragment extends ListFragment {
     private List<String> descriptions = new ArrayList<>();
 
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
