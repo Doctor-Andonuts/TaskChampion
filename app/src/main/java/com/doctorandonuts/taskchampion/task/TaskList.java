@@ -1,6 +1,9 @@
 package com.doctorandonuts.taskchampion.task;
 
 import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,15 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import android.util.Log;
-
-import com.doctorandonuts.taskchampion.task.Task;
-
-import org.json.JSONObject;
-
-/**
- * Created by jgowing on 8/10/2015.
- */
 public class TaskList {
     private String TAG = "TaskListFile";
     private static final String FILENAME = "pending.data";
@@ -33,7 +27,7 @@ public class TaskList {
     }
 
 
-    public List<Task> getDescriptionList(List<Task> taskList) {
+    public List<Task> getTaskList(List<Task> taskList) {
         readPendingFile();
         taskList.clear();
 
@@ -42,7 +36,7 @@ public class TaskList {
                 Task task = new Task(taskJson);
                 taskList.add(task);
             } catch (Exception e) {
-                Log.d(TAG, "getDescription: " + e.toString());
+                Log.d(TAG, "getTaskList: " + e.toString());
             }
         }
 
@@ -73,10 +67,10 @@ public class TaskList {
         readPendingFile();
 
         String[] splitData = payloadData.split("\n");
-        for(Integer i=0; i<splitData.length; i++) {
-            if (!Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", splitData[i])) {
+        for (String aSplitData : splitData) {
+            if (!Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", aSplitData)) {
                 try {
-                    JSONObject line = new JSONObject(splitData[i]);
+                    JSONObject line = new JSONObject(aSplitData);
                     addTask(line);
                 } catch (Exception e) {
                     Log.d(TAG, e.toString());
@@ -85,10 +79,10 @@ public class TaskList {
         }
 
         Log.d(TAG, "trying write");
-        writePendingFile(arraylistToString(_pending));
+        writePendingFile(arrayListToString(_pending));
     }
 
-    private String arraylistToString(ArrayList<JSONObject> arrayList) {
+    private String arrayListToString(ArrayList<JSONObject> arrayList) {
         String returnString = "";
         for (JSONObject listItem : arrayList) {
             returnString += listItem.toString() + "\n";

@@ -1,7 +1,5 @@
 package com.doctorandonuts.taskchampion.sync;
 
-import android.util.Log;
-
 import java.nio.charset.MalformedInputException;
 import java.util.HashMap;
 import java.util.Map;

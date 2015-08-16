@@ -39,7 +39,7 @@ public class TaskListFragment extends ListFragment {
 
     public void refreshData() {
         TaskList taskList = new TaskList(getActivity());
-        tasks = taskList.getDescriptionList(tasks);
+        tasks = taskList.getTaskList(tasks);
         Log.d("FragmentList", "DATA REFRESH");
     }
 
