@@ -1,6 +1,7 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,15 +12,15 @@ import android.widget.Toast;
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
 
 
-public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener {
+public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener,TaskDetailsFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-            TaskListFragment list = new TaskListFragment();
-            getFragmentManager().beginTransaction().add(android.R.id.content, list, "ArrayListFrag").commit();
+            TaskListFragment taskListFragment = new TaskListFragment();
+            getFragmentManager().beginTransaction().add(android.R.id.content, taskListFragment, "ArrayListFrag").commit();
         }
     }
 
@@ -63,13 +64,20 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
     }
 
     public void refreshTaskListFragment() {
-        TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
-        fragment.refreshData();
-        ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
+        TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
+        taskListFragment.refreshData();
+        ArrayAdapter adapter = (ArrayAdapter) taskListFragment.getListAdapter();
         adapter.notifyDataSetChanged();
     }
 
     public void onFragmentInteraction(String uuid) {
         Log.i("FragmentList", "onFragmentInteraction: " + uuid);
+        TaskDetailsFragment taskDetailsFragment = new TaskDetailsFragment();
+        TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
+        getFragmentManager().beginTransaction().remove(taskListFragment).add(android.R.id.content, taskDetailsFragment, "TaskDetailFragment").addToBackStack(null).commit();
+    }
+
+    public void onFragmentInteraction(Uri uri) {
+        Log.i("FragmentList", "onFragmentInteraction: Uri");
     }
 }
