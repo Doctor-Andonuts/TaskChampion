@@ -3,9 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".TaskListActivity">
     <item
-        android:id="@+id/action_clear_file"
-        android:title="Clear File"
+        android:id="@+id/action_clear"
+        android:title="Clear"
         android:orderInCategory="50"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/action_load"
+        android:title="Load"
+        android:orderInCategory="100"
         android:showAsAction="always" />
     <item
         android:id="@+id/action_sync"

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
 
 
-public class TaskListActivity extends Activity {
+public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,14 @@ public class TaskListActivity extends Activity {
             taskWarriorSync.execute();
 
             return true;
-        } else if (id == R.id.action_clear_file) {
+        } else if (id == R.id.action_clear) {
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
+            ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
+            adapter.notifyDataSetChanged();
+        } else if (id == R.id.action_load) {
+            TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
+            fragment.refreshData();
             ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
             adapter.notifyDataSetChanged();
         }
@@ -62,5 +67,9 @@ public class TaskListActivity extends Activity {
         fragment.refreshData();
         ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
         adapter.notifyDataSetChanged();
+    }
+
+    public void onFragmentInteraction(String uuid) {
+        Log.i("FragmentList", "onFragmentInteraction: " + uuid);
     }
 }
