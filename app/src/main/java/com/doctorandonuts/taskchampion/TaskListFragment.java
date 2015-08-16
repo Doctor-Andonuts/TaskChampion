@@ -1,14 +1,14 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.doctorandonuts.taskchampion.sync.CustomArrayAdapter;
+import com.doctorandonuts.taskchampion.task.Task;
+import com.doctorandonuts.taskchampion.task.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;

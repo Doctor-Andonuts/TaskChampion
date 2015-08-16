@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.doctorandonuts.taskchampion.TaskList;
+import com.doctorandonuts.taskchampion.task.TaskList;
 import com.doctorandonuts.taskchampion.TaskListActivity;
 
 import java.util.regex.Pattern;

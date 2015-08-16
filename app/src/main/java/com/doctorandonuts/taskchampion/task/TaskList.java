@@ -1,4 +1,4 @@
-package com.doctorandonuts.taskchampion;
+package com.doctorandonuts.taskchampion.task;
 
 import android.content.Context;
 
@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import android.util.Log;
+
+import com.doctorandonuts.taskchampion.task.Task;
 
 import org.json.JSONObject;
 

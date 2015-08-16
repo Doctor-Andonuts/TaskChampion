@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.doctorandonuts.taskchampion.R;
-import com.doctorandonuts.taskchampion.Task;
+import com.doctorandonuts.taskchampion.task.Task;
 
 import java.util.List;
 

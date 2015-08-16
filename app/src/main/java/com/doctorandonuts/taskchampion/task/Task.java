@@ -1,4 +1,4 @@
-package com.doctorandonuts.taskchampion;
+package com.doctorandonuts.taskchampion.task;
 
 import android.util.Log;
 
