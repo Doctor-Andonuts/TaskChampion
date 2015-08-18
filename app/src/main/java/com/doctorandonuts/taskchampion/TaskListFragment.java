@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 
@@ -31,6 +33,20 @@ public class TaskListFragment extends ListFragment {
         }
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getActivity().getMenuInflater().inflate(R.menu.menu_task_list, menu);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
