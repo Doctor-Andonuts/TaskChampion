@@ -99,6 +99,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
         _taskListActivity.refreshTaskListFragment();
 
+
         Log.d(TAG, "DONE");
     }
 }

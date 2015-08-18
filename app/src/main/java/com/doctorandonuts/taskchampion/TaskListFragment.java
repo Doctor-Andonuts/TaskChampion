@@ -1,5 +1,6 @@
 package com.doctorandonuts.taskchampion;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskListFragment extends ListFragment {
-    private CustomArrayAdapter arrayAdapter;
     private List<Task> tasks = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 
@@ -44,9 +44,16 @@ public class TaskListFragment extends ListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
+        setHasOptionsMenu(true);
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setTitle("TaskChampion");
+
+        menu.clear();
         // Inflate the menu; this adds items to the action bar if it is present.
         getActivity().getMenuInflater().inflate(R.menu.menu_task_list, menu);
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -54,7 +61,7 @@ public class TaskListFragment extends ListFragment {
 
         refreshData();
 
-        arrayAdapter = new CustomArrayAdapter(getActivity(), tasks);
+        CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), tasks);
         setListAdapter(arrayAdapter);
     }
 

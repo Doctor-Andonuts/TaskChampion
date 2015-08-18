@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -25,13 +24,6 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
     }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_task_list, menu);
-//        return true;
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -42,7 +34,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sync) {
             Log.d("TaskWarriorSync", "Attempting Sync...");
-            Toast.makeText(getApplicationContext(),"Attempting Sync...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Attempting Sync...", Toast.LENGTH_SHORT).show();
 
             TaskWarriorSync taskWarriorSync = new TaskWarriorSync(this);
             taskWarriorSync.execute();
@@ -58,10 +50,14 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             fragment.refreshData();
             ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
             adapter.notifyDataSetChanged();
+        } else if (id == android.R.id.home) {
+            getFragmentManager().popBackStack();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public void refreshTaskListFragment() {
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
@@ -74,7 +70,11 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         Log.i("FragmentList", "onFragmentInteraction: " + uuid);
         TaskDetailsFragment taskDetailsFragment = new TaskDetailsFragment();
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
-        getFragmentManager().beginTransaction().remove(taskListFragment).add(android.R.id.content, taskDetailsFragment, "TaskDetailFragment").addToBackStack(null).commit();
+        getFragmentManager().beginTransaction()
+                .remove(taskListFragment)
+                .add(android.R.id.content, taskDetailsFragment, "TaskDetailFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
     public void onFragmentInteraction(Uri uri) {
