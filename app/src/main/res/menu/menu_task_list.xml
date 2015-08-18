@@ -4,17 +4,17 @@
     tools:context=".TaskListActivity">
     <item
         android:id="@+id/action_clear"
-        android:title="Clear"
+        android:title="@string/action_clear"
         android:orderInCategory="50"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_load"
-        android:title="Load"
+        android:title="@string/action_load"
         android:orderInCategory="100"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_sync"
         android:title="@string/action_sync"
         android:orderInCategory="100"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
 </menu>
