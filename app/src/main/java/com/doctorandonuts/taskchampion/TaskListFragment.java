@@ -15,11 +15,18 @@ import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskList;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TaskListFragment extends ListFragment {
     private List<Task> tasks = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
+    private Comparator descriptionSort = new Comparator<Task>() {
+        @Override
+        public int compare(Task lhs, Task rhs) {
+            return lhs.getValue("description").compareTo(rhs.getValue("description"));
+        }
+    };
 
 
     @Override
@@ -62,6 +69,7 @@ public class TaskListFragment extends ListFragment {
         refreshData();
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), tasks);
+        arrayAdapter.sort(descriptionSort);
         setListAdapter(arrayAdapter);
     }
 

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
+import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
 
 import java.util.Comparator;
@@ -16,7 +17,7 @@ import java.util.Comparator;
 
 public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener,TaskDetailsFragment.OnFragmentInteractionListener {
 
-    Comparator descriptionSort = new Comparator<Task>() {
+    private Comparator descriptionSort = new Comparator<Task>() {
         @Override
         public int compare(Task lhs, Task rhs) {
             return lhs.getValue("description").compareTo(rhs.getValue("description"));
@@ -54,13 +55,13 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         } else if (id == R.id.action_clear) {
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
-            ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
+            CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
             adapter.sort(descriptionSort);
             //adapter.notifyDataSetChanged();
         } else if (id == R.id.action_load) {
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.refreshData();
-            ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
+            CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
             adapter.sort(descriptionSort);
             //adapter.notifyDataSetChanged();
         } else if (id == android.R.id.home) {
@@ -75,7 +76,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
     public void refreshTaskListFragment() {
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
         taskListFragment.refreshData();
-        ArrayAdapter adapter = (ArrayAdapter) taskListFragment.getListAdapter();
+        CustomArrayAdapter adapter = (CustomArrayAdapter) taskListFragment.getListAdapter();
         adapter.sort(descriptionSort);
         //adapter.notifyDataSetChanged();
     }
