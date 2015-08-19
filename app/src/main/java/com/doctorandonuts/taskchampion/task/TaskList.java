@@ -10,8 +10,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -19,7 +19,7 @@ public class TaskList {
     private String TAG = "TaskListFile";
     private static final String FILENAME = "pending.data";
     private Context _context;
-    private ArrayList<JSONObject> _pending = new ArrayList<>();
+    private HashMap<String, Task> taskHashMap = new HashMap<>();
 
     public TaskList (Context context)
     {
@@ -27,33 +27,28 @@ public class TaskList {
     }
 
 
-    public List<Task> getTaskList(List<Task> taskList) {
+    public List<Task> getTaskList(List<Task> oldTasks) {
         readPendingFile();
-        taskList.clear();
+        oldTasks.clear();
 
-        for ( JSONObject taskJson : _pending ) {
-            try {
-                Task task = new Task(taskJson);
-                taskList.add(task);
-            } catch (Exception e) {
-                Log.d(TAG, "getTaskList: " + e.toString());
-            }
+        for ( Task task : taskHashMap.values() ) {
+            oldTasks.add(task);
         }
 
-        return taskList;
+        return oldTasks;
     }
 
 
     private void readPendingFile() {
+        taskHashMap.clear();
         try {
             File file = new File(_context.getFilesDir(), FILENAME);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String line;
 
             while((line = bufferedReader.readLine()) != null) {
-                //Log.d("TaskListFile", line);
-                JSONObject jsonLine = new JSONObject(line);
-                _pending.add(jsonLine);
+                Task task = new Task(new JSONObject(line));
+                taskHashMap.put(task.getValue("uuid"), task);
             }
         } catch (Exception e ) {
             Log.d(TAG, "Problem reading: " + e.toString());
@@ -71,8 +66,7 @@ public class TaskList {
         for (String aSplitData : splitData) {
             if (!Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", aSplitData)) {
                 try {
-                    JSONObject line = new JSONObject(aSplitData);
-                    addTask(line);
+                    addTask(new Task(new JSONObject(aSplitData)));
                 } catch (Exception e) {
                     Log.d(TAG, e.toString());
                 }
@@ -80,45 +74,37 @@ public class TaskList {
         }
 
         Log.d(TAG, "trying write");
-        writePendingFile(arrayListToString(_pending));
+        writePendingFile(arrayListToString());
     }
 
 
-    private String arrayListToString(ArrayList<JSONObject> arrayList) {
+    private String arrayListToString() {
         String returnString = "";
-        for (JSONObject listItem : arrayList) {
-            returnString += listItem.toString() + "\n";
+        for (Task task : taskHashMap.values()) {
+            returnString += task.getJsonString() + "\n";
         }
 
         return returnString;
     }
 
 
-    private void addTask(JSONObject taskToAdd) {
-        Boolean taskFound = false;
-        for(Integer i=0; i<_pending.size(); i++) {
+    private void addTask(Task taskToAdd) {
+        String newUuid = taskToAdd.getValue("uuid");
+
+        if(taskHashMap.containsKey(newUuid)) {
             try {
-                if(_pending.get(i).getString("uuid").equals(taskToAdd.getString("uuid"))) {
-                    taskFound = true;
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
-                    Date currentTaskDate = sdf.parse(_pending.get(i).getString("modified"));
-                    Date newTaskDate = sdf.parse(taskToAdd.getString("modified"));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                Date currentTaskDate = sdf.parse(taskHashMap.get(newUuid).getValue("modified"));
+                Date newTaskDate = sdf.parse(taskToAdd.getValue("modified"));
 
-                    //Log.d(TAG, "Pending: " + _pending.get(i).getString("modified"));
-                    //Log.d(TAG, "New: " + taskToAdd.getString("modified"));
-
-                    if(newTaskDate.after(currentTaskDate)) {
-                        _pending.set(i, taskToAdd);
-                    }
-
-                    //Log.d(TAG, "----");
+                if(newTaskDate.after(currentTaskDate)) {
+                    taskHashMap.put(newUuid, taskToAdd);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Log.d(TAG, e.toString());
             }
-        }
-        if(!taskFound) {
-            _pending.add(taskToAdd);
+        } else {
+            taskHashMap.put(newUuid, taskToAdd);
         }
     }
 

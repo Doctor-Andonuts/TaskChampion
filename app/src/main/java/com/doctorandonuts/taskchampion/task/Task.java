@@ -4,9 +4,6 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-/**
- * Created by jgowing on 8/13/2015.
- */
 public class Task {
     private JSONObject taskJson;
     private String TAG = "TaskClass";
@@ -23,5 +20,9 @@ public class Task {
             Log.d(TAG, e.toString());
         }
         return value;
+    }
+
+    public String getJsonString() {
+        return taskJson.toString();
     }
 }
