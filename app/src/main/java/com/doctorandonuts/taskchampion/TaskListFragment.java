@@ -87,7 +87,7 @@ public class TaskListFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(tasks.get(position).getValue("uuid"));
+            mListener.onFragmentInteraction(tasks.get(position));
         }
     }
 
@@ -114,6 +114,6 @@ public class TaskListFragment extends ListFragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(String id);
+        void onFragmentInteraction(Task task);
     }
 }

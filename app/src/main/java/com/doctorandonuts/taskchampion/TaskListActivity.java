@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
@@ -81,9 +82,10 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         //adapter.notifyDataSetChanged();
     }
 
-    public void onFragmentInteraction(String uuid) {
-        Log.i("FragmentList", "onFragmentInteraction: " + uuid);
+    public void onFragmentInteraction(Task task) {
+        Log.i("FragmentList", "onFragmentInteraction: " + task.getValue("uuid"));
         TaskDetailsFragment taskDetailsFragment = new TaskDetailsFragment();
+        taskDetailsFragment.setTask(task);
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
         getFragmentManager().beginTransaction()
                 .remove(taskListFragment)
@@ -92,7 +94,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
                 .commit();
     }
 
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction() {
         Log.i("FragmentList", "onFragmentInteraction: Uri");
     }
 }
