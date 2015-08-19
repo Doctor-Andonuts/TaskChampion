@@ -1,4 +1,4 @@
-package com.doctorandonuts.taskchampion.sync;
+package com.doctorandonuts.taskchampion.task;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,9 +12,6 @@ import com.doctorandonuts.taskchampion.task.Task;
 
 import java.util.List;
 
-/**
- * Created by jgowing on 8/13/2015.
- */
 public class CustomArrayAdapter extends ArrayAdapter<Task> {
     private final Context context;
     private final List<Task> tasks;
@@ -31,9 +28,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.task_list_item, parent, false);
         TextView firstLine_textView = (TextView) rowView.findViewById(R.id.firstLine);
-        TextView secondLine_textView = (TextView) rowView.findViewById(R.id.secondLine);
         firstLine_textView.setText(tasks.get(position).getValue("description"));
-        secondLine_textView.setText(tasks.get(position).getValue("uuid"));
 
         return rowView;
     }

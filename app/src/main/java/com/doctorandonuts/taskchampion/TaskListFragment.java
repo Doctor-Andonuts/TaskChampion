@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 
-import com.doctorandonuts.taskchampion.sync.CustomArrayAdapter;
+import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskList;
 
