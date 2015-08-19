@@ -33,4 +33,5 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         return rowView;
     }
 
+
 }

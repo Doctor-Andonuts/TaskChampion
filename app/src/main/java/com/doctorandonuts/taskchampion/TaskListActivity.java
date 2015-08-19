@@ -9,9 +9,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
+import com.doctorandonuts.taskchampion.task.Task;
+
+import java.util.Comparator;
 
 
 public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener,TaskDetailsFragment.OnFragmentInteractionListener {
+
+    Comparator descriptionSort = new Comparator<Task>() {
+        @Override
+        public int compare(Task lhs, Task rhs) {
+            return lhs.getValue("description").compareTo(rhs.getValue("description"));
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +55,14 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
             ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
-            adapter.notifyDataSetChanged();
+            adapter.sort(descriptionSort);
+            //adapter.notifyDataSetChanged();
         } else if (id == R.id.action_load) {
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.refreshData();
             ArrayAdapter adapter = (ArrayAdapter) fragment.getListAdapter();
-            adapter.notifyDataSetChanged();
+            adapter.sort(descriptionSort);
+            //adapter.notifyDataSetChanged();
         } else if (id == android.R.id.home) {
             getFragmentManager().popBackStack();
             return true;
@@ -63,7 +76,8 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
         taskListFragment.refreshData();
         ArrayAdapter adapter = (ArrayAdapter) taskListFragment.getListAdapter();
-        adapter.notifyDataSetChanged();
+        adapter.sort(descriptionSort);
+        //adapter.notifyDataSetChanged();
     }
 
     public void onFragmentInteraction(String uuid) {
