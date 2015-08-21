@@ -98,6 +98,8 @@ public class TaskListFragment extends ListFragment {
     }
 
     public void clearData() {
+        TaskList taskList = new TaskList(getActivity());
+        taskList.writePendingFile("");
         tasks.clear();
     }
 

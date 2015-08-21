@@ -3,14 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".TaskListActivity">
     <item
-        android:id="@+id/action_clear"
-        android:title="@string/action_clear"
+        android:id="@+id/action_clear_all"
+        android:title="@string/action_clear_all"
         android:orderInCategory="50"
-        android:showAsAction="never" />
-    <item
-        android:id="@+id/action_load"
-        android:title="@string/action_load"
-        android:orderInCategory="100"
         android:showAsAction="never" />
     <item
         android:id="@+id/action_sync"

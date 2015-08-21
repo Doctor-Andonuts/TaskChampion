@@ -1,6 +1,8 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,18 +55,15 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             taskWarriorSync.execute();
 
             return true;
-        } else if (id == R.id.action_clear) {
+        } else if (id == R.id.action_clear_all) {
+            SharedPreferences sharedPref = getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("syncKey", "");
+            editor.commit();
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
             CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
             adapter.sort(descriptionSort);
-            //adapter.notifyDataSetChanged();
-        } else if (id == R.id.action_load) {
-            TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
-            fragment.refreshData();
-            CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
-            adapter.sort(descriptionSort);
-            //adapter.notifyDataSetChanged();
         } else if (id == android.R.id.home) {
             getFragmentManager().popBackStack();
             return true;

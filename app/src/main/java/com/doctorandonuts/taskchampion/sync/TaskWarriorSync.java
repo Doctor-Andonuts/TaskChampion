@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.TaskListActivity;
 import com.doctorandonuts.taskchampion.task.TaskList;
@@ -30,12 +31,6 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
-
-        // This sets the sync key to nothing to make sure I can keep testing
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("syncKey", "");
-        editor.commit();
-
         String syncKey = sharedPref.getString("syncKey", "");
 
         final Msg sync = new Msg();
@@ -98,6 +93,9 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         }
 
         _taskListActivity.refreshTaskListFragment();
+
+        // -1 because one is the sync key, and not a task
+        Toast.makeText(_context, (splitData.length-1) + " tasks added", Toast.LENGTH_SHORT).show();
 
 
         Log.d(TAG, "DONE");
