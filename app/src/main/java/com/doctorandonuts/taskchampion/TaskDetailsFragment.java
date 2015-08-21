@@ -53,8 +53,19 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText(task.getValue("description"));
+        ((TextView) view.findViewById(R.id.descriptionText)).setText(task.getValue("description"));
+        ((TextView) view.findViewById(R.id.statusText)).setText(task.getValue("status"));
+        ((TextView) view.findViewById(R.id.entryText)).setText(task.getValue("entry"));
+        ((TextView) view.findViewById(R.id.projectText)).setText(task.getValue("project"));
+        ((TextView) view.findViewById(R.id.dueText)).setText(task.getValue("due"));
+        ((TextView) view.findViewById(R.id.tagsText)).setText(task.getValue("tags"));
+        ((TextView) view.findViewById(R.id.endText)).setText(task.getValue("end"));
+        ((TextView) view.findViewById(R.id.waitText)).setText(task.getValue("wait"));
+        ((TextView) view.findViewById(R.id.annotationText)).setText(task.getValue("annotation"));
+        ((TextView) view.findViewById(R.id.priorityText)).setText(task.getValue("priority"));
+        ((TextView) view.findViewById(R.id.dependsText)).setText(task.getValue("depends"));
+        ((TextView) view.findViewById(R.id.modifiedText)).setText(task.getValue("modified"));
+        ((TextView) view.findViewById(R.id.uuidText)).setText(task.getValue("uuid"));
         super.onViewCreated(view, savedInstanceState);
     }
 

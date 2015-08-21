@@ -13,7 +13,7 @@ public class Task {
     }
 
     public String getValue(String key) {
-        String value = "ERROR";
+        String value = "";
         try {
             value = taskJson.getString(key);
         } catch (Exception e) {
