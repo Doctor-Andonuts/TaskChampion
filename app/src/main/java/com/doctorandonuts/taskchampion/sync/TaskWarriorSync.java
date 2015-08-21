@@ -95,7 +95,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         _taskListActivity.refreshTaskListFragment();
 
         // -1 because one is the sync key, and not a task
-        Toast.makeText(_context, (splitData.length-1) + " tasks added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context, (splitData.length-1) + " changes proccessed", Toast.LENGTH_SHORT).show();
 
 
         Log.d(TAG, "DONE");
