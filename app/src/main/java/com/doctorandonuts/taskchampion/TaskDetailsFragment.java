@@ -53,7 +53,7 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView textView = (TextView) view.findViewById(R.id.hello);
+        TextView textView = (TextView) view.findViewById(R.id.textView);
         textView.setText(task.getValue("description"));
         super.onViewCreated(view, savedInstanceState);
     }

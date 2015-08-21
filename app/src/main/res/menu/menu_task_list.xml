@@ -6,15 +6,15 @@
         android:id="@+id/action_clear"
         android:title="@string/action_clear"
         android:orderInCategory="50"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="never" />
     <item
         android:id="@+id/action_load"
         android:title="@string/action_load"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="never" />
     <item
         android:id="@+id/action_sync"
         android:title="@string/action_sync"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom" />
+        android:orderInCategory="150"
+        android:showAsAction="never" />
 </menu>
