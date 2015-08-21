@@ -5,11 +5,11 @@
     <item
         android:id="@+id/action_clear_all"
         android:title="@string/action_clear_all"
-        android:orderInCategory="50"
+        android:orderInCategory="500"
         android:showAsAction="never" />
     <item
         android:id="@+id/action_sync"
         android:title="@string/action_sync"
-        android:orderInCategory="150"
+        android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>
