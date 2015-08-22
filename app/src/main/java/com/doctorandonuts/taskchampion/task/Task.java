@@ -2,6 +2,7 @@ package com.doctorandonuts.taskchampion.task;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -31,12 +32,10 @@ public class Task {
         urgencyCoefficients.put("scheduled", 4.0f);
         urgencyCoefficients.put("age", 2.0f);
         urgencyCoefficients.put("annotations", 1.0f);
-        urgencyCoefficients.put("tags", 1.0f);
-        urgencyCoefficients.put("project", 1.0f);
+        urgencyCoefficients.put("tags", 1.0f); // DONE
+        urgencyCoefficients.put("project", 1.0f); // DONE
         urgencyCoefficients.put("blocked", 5.0f);
-        urgencyCoefficients.put("waiting", -3.0f);
-        urgencyCoefficients.put("user.project", 5.0f);
-        urgencyCoefficients.put("user.tag", 5.0f);
+        urgencyCoefficients.put("waiting", -3.0f); // DONE
 
         urgency = 0.0f;
         urgency += urgency_next() * urgencyCoefficients.get("next");
@@ -44,6 +43,9 @@ public class Task {
         urgency += urgency_priority_L() * urgencyCoefficients.get("priority.L");
         urgency += urgency_priority_M() * urgencyCoefficients.get("priority.M");
         urgency += urgency_priority_H() * urgencyCoefficients.get("priority.H");
+        urgency += urgency_project() * urgencyCoefficients.get("project");
+        urgency += urgency_tags() * urgencyCoefficients.get("tags");
+        urgency += urgency_waiting() * urgencyCoefficients.get("waiting");
 
 
     }
@@ -90,7 +92,7 @@ public class Task {
     }
     private Float urgency_priority_H() {
         if(taskJson.has("priority")) {
-            Log.d(TAG, getValue("priority"));
+            //Log.d(TAG, getValue("priority"));
             if(getValue("priority").equals("H")) {
                 return 1.0f;
             }
@@ -118,6 +120,32 @@ public class Task {
             } catch (Exception e) {
                 //Log.d(TAG, e.toString());
             }
+        }
+        return 0.0f;
+    }
+    private Float urgency_project() {
+        if (taskJson.has("project")) {
+            return 1.0f;
+        }
+        return 0.0f;
+    }
+    private Float urgency_waiting() {
+        if (getValue("status").equals("waiting")) {
+            return 1.0f;
+        }
+        return 0.0f;
+    }
+    private Float urgency_tags() {
+        if (taskJson.has("tags")) {
+            try {
+                JSONArray tags = new JSONArray(getValue("tags"));
+                switch(tags.length()) {
+                    case 0: return 0.0f;
+                    case 1: return 0.8f;
+                    case 2: return 0.9f;
+                    default: return 1.0f;
+                }
+            } catch (Exception e) {}
         }
         return 0.0f;
     }
