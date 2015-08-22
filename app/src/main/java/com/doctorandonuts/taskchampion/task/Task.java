@@ -14,32 +14,36 @@ import java.util.concurrent.TimeUnit;
 public class Task {
     private JSONObject taskJson;
     private String TAG = "TaskClass";
-    private HashMap<String, Float> urgencyCoefficients = new HashMap<>();
+
     private Float urgency;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
 
     public Task(JSONObject taskJson) {
         this.taskJson = taskJson;
-        this.urgencyCoefficients.put("next", 15.0f); //DONE
-        this.urgencyCoefficients.put("due", 12.0f); //DONE
-        this.urgencyCoefficients.put("blocking", 8.0f);
-        this.urgencyCoefficients.put("priority.H", 6.0f);
-        this.urgencyCoefficients.put("priority.M", 3.9f);
-        this.urgencyCoefficients.put("priority.L", 1.8f);
-        this.urgencyCoefficients.put("active", 4.0f);
-        this.urgencyCoefficients.put("scheduled", 4.0f);
-        this.urgencyCoefficients.put("age", 2.0f);
-        this.urgencyCoefficients.put("annotations", 1.0f);
-        this.urgencyCoefficients.put("tags", 1.0f);
-        this.urgencyCoefficients.put("project", 1.0f);
-        this.urgencyCoefficients.put("blocked", 5.0f);
-        this.urgencyCoefficients.put("waiting", -3.0f);
-        this.urgencyCoefficients.put("user.project", 5.0f);
-        this.urgencyCoefficients.put("user.tag", 5.0f);
+        HashMap<String, Float> urgencyCoefficients = new HashMap<>();
+        urgencyCoefficients.put("next", 15.0f); // DONE
+        urgencyCoefficients.put("due", 12.0f); // DONE
+        urgencyCoefficients.put("blocking", 8.0f);
+        urgencyCoefficients.put("priority.H", 6.0f); // DONE
+        urgencyCoefficients.put("priority.M", 3.9f); // DONE
+        urgencyCoefficients.put("priority.L", 1.8f); // DONE
+        urgencyCoefficients.put("active", 4.0f);
+        urgencyCoefficients.put("scheduled", 4.0f);
+        urgencyCoefficients.put("age", 2.0f);
+        urgencyCoefficients.put("annotations", 1.0f);
+        urgencyCoefficients.put("tags", 1.0f);
+        urgencyCoefficients.put("project", 1.0f);
+        urgencyCoefficients.put("blocked", 5.0f);
+        urgencyCoefficients.put("waiting", -3.0f);
+        urgencyCoefficients.put("user.project", 5.0f);
+        urgencyCoefficients.put("user.tag", 5.0f);
 
         urgency = 0.0f;
         urgency += urgency_next() * urgencyCoefficients.get("next");
         urgency += urgency_due() * urgencyCoefficients.get("due");
+        urgency += urgency_priority_L() * urgencyCoefficients.get("priority.L");
+        urgency += urgency_priority_M() * urgencyCoefficients.get("priority.M");
+        urgency += urgency_priority_H() * urgencyCoefficients.get("priority.H");
 
 
     }
@@ -49,7 +53,7 @@ public class Task {
         try {
             value = taskJson.getString(key);
         } catch (Exception e) {
-            Log.d(TAG, e.toString());
+            //Log.d(TAG, e.toString());
         }
         return value;
     }
@@ -68,7 +72,31 @@ public class Task {
         }
         return 0.0f;
     }
-
+    private Float urgency_priority_L() {
+        if(taskJson.has("priority")) {
+            if(getValue("priority").equals("L")) {
+                return 1.0f;
+            }
+        }
+        return 0.0f;
+    }
+    private Float urgency_priority_M() {
+        if(taskJson.has("priority")) {
+            if(getValue("priority").equals("M")) {
+                return 1.0f;
+            }
+        }
+        return 0.0f;
+    }
+    private Float urgency_priority_H() {
+        if(taskJson.has("priority")) {
+            Log.d(TAG, getValue("priority"));
+            if(getValue("priority").equals("H")) {
+                return 1.0f;
+            }
+        }
+        return 0.0f;
+    }
     ////////////////////////////////////////////////////////////////////////////////
     //     Past                  Present                              Future
     //     Overdue               Due                                     Due
@@ -88,7 +116,7 @@ public class Task {
                 else return 0.2f;
 
             } catch (Exception e) {
-                Log.d(TAG, e.toString());
+                //Log.d(TAG, e.toString());
             }
         }
         return 0.0f;
@@ -96,8 +124,10 @@ public class Task {
 
 
     private Boolean hasTag(String tag) {
-        if(getValue("tags").contains(tag)) {
-            return true;
+        if(taskJson.has("tags")) {
+            if (getValue("tags").contains(tag)) {
+                return true;
+            }
         }
         return false;
     }
