@@ -27,15 +27,17 @@ public class TaskList {
     }
 
 
-    public List<Task> getTaskList(List<Task> oldTasks) {
+    public List<Task> getTaskList(List<Task> taskList) {
         readPendingFile();
-        oldTasks.clear();
+        taskList.clear();
 
         for ( Task task : taskHashMap.values() ) {
-            oldTasks.add(task);
+            if(task.getValue("status").equals("pending")) {
+                taskList.add(task);
+            }
         }
 
-        return oldTasks;
+        return taskList;
     }
 
 

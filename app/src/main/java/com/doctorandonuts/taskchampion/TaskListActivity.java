@@ -93,6 +93,12 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
                 .commit();
     }
 
+    @Override
+    protected void onResume() {
+        refreshTaskListFragment();
+        super.onResume();
+    }
+
     public void onFragmentInteraction() {
         Log.i("FragmentList", "onFragmentInteraction: Uri");
     }
