@@ -59,7 +59,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             SharedPreferences sharedPref = getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("syncKey", "");
-            editor.commit();
+            editor.apply();
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
             CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();

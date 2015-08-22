@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.doctorandonuts.taskchampion.R;
-import com.doctorandonuts.taskchampion.task.Task;
 
 import java.util.List;
 
@@ -27,8 +26,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.task_list_item, parent, false);
-        TextView firstLine_textView = (TextView) rowView.findViewById(R.id.firstLine);
-        firstLine_textView.setText(tasks.get(position).getValue("description"));
+        TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
+        descriptionTextView.setText(tasks.get(position).getValue("description"));
+        TextView urgencyTextView = (TextView) rowView.findViewById(R.id.urgency);
+        urgencyTextView.setText(tasks.get(position).getUrgency().toString());
+
 
         return rowView;
     }
