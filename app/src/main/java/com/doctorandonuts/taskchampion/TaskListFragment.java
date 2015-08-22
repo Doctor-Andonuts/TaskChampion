@@ -21,10 +21,10 @@ import java.util.List;
 public class TaskListFragment extends ListFragment {
     private List<Task> tasks = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
-    private Comparator descriptionSort = new Comparator<Task>() {
+    private Comparator urgencySort = new Comparator<Task>() {
         @Override
         public int compare(Task lhs, Task rhs) {
-            return lhs.getValue("description").compareTo(rhs.getValue("description"));
+            return rhs.getUrgency().compareTo(lhs.getUrgency());
         }
     };
 
@@ -69,7 +69,7 @@ public class TaskListFragment extends ListFragment {
         refreshData();
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), tasks);
-        arrayAdapter.sort(descriptionSort);
+        arrayAdapter.sort(urgencySort);
         setListAdapter(arrayAdapter);
     }
 

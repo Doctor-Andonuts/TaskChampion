@@ -20,10 +20,10 @@ import java.util.Comparator;
 
 public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener,TaskDetailsFragment.OnFragmentInteractionListener {
 
-    private Comparator descriptionSort = new Comparator<Task>() {
+    private Comparator urgencySort = new Comparator<Task>() {
         @Override
         public int compare(Task lhs, Task rhs) {
-            return lhs.getValue("description").compareTo(rhs.getValue("description"));
+            return rhs.getUrgency().compareTo(lhs.getUrgency());
         }
     };
 
@@ -63,7 +63,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
             CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
-            adapter.sort(descriptionSort);
+            adapter.sort(urgencySort);
         } else if (id == android.R.id.home) {
             getFragmentManager().popBackStack();
             return true;
@@ -77,7 +77,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
         taskListFragment.refreshData();
         CustomArrayAdapter adapter = (CustomArrayAdapter) taskListFragment.getListAdapter();
-        adapter.sort(descriptionSort);
+        adapter.sort(urgencySort);
         //adapter.notifyDataSetChanged();
     }
 
