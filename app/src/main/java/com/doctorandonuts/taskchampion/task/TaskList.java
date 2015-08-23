@@ -35,6 +35,7 @@ public class TaskList {
         List<String> blockingUuid = new ArrayList<>();
 
         for ( Task task : taskHashMap.values() ) {
+            // Figure out blocking and blocked tasks
             if(task.hasValue("depends")) {
                 String[] depends = task.getValue("depends").split(",");
                 for (String uuid : depends) {
@@ -48,6 +49,7 @@ public class TaskList {
                 }
             }
 
+            // Add tasks to List that fit the criteria
             if(task.getValue("status").equals("pending") && !task.isBlocked()) {
                 taskList.add(task);
             }
