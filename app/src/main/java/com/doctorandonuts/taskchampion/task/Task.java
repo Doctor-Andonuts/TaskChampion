@@ -26,21 +26,21 @@ public class Task {
 
     public void calcUrgency() {
         HashMap<String, Float> urgencyCoefficients = new HashMap<>();
-        urgencyCoefficients.put("next", 15.0f); // DONE
-        urgencyCoefficients.put("due", 12.0f); // DONE
-        urgencyCoefficients.put("blocking", 8.0f); // DONE
-        urgencyCoefficients.put("priority.H", 6.0f); // DONE
-        urgencyCoefficients.put("priority.M", 3.9f); // DONE
-        urgencyCoefficients.put("priority.L", 1.8f); // DONE
-        urgencyCoefficients.put("scheduled", 5.0f); // DONE
-        urgencyCoefficients.put("active", 4.0f); // DONE
-        urgencyCoefficients.put("age", 2.0f); // DONE
-        urgencyCoefficients.put("annotations", 1.0f); // DONE
-        urgencyCoefficients.put("tags", 1.0f); // DONE
-        urgencyCoefficients.put("project", 1.0f); // DONE
-        urgencyCoefficients.put("blocked", -5.0f); // DONE
-        urgencyCoefficients.put("waiting", -3.0f); // DONE
-        urgencyCoefficients.put("uda.someday", -5.0f); // DONE
+        urgencyCoefficients.put("next", 15.0f);
+        urgencyCoefficients.put("due", 12.0f);
+        urgencyCoefficients.put("blocking", 8.0f);
+        urgencyCoefficients.put("priority.H", 6.0f);
+        urgencyCoefficients.put("priority.M", 3.9f);
+        urgencyCoefficients.put("priority.L", 1.8f);
+        urgencyCoefficients.put("scheduled", 5.0f);
+        urgencyCoefficients.put("active", 4.0f);
+        urgencyCoefficients.put("age", 2.0f);
+        urgencyCoefficients.put("annotations", 1.0f);
+        urgencyCoefficients.put("tags", 1.0f);
+        urgencyCoefficients.put("project", 1.0f);
+        urgencyCoefficients.put("blocked", -5.0f);
+        urgencyCoefficients.put("waiting", -3.0f);
+        urgencyCoefficients.put("uda.someday", -5.0f);
 
         urgency = 0.0f;
         urgency += urgency_next() * urgencyCoefficients.get("next");
