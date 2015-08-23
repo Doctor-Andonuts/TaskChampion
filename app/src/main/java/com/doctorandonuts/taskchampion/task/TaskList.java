@@ -3,6 +3,7 @@ package com.doctorandonuts.taskchampion.task;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +32,32 @@ public class TaskList {
     public List<Task> getTaskList(List<Task> taskList) {
         readPendingFile();
         taskList.clear();
+        List<String> blockingUuid = new ArrayList<>();
 
         for ( Task task : taskHashMap.values() ) {
             if(task.getValue("status").equals("pending")) {
                 taskList.add(task);
+                if(task.hasValue("depends")) {
+                    String[] depends = task.getValue("depends").split(",");
+                    for (String uuid : depends) {
+                        if(taskHashMap.containsKey(uuid)) {
+                            String dependsStatus = taskHashMap.get(uuid).getValue("status");
+                            if(dependsStatus.equals("pending") || dependsStatus.equals("waiting") || dependsStatus.equals("recuring")) {
+                                task.setBlocked(true);
+                                blockingUuid.add(uuid);
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        for (Task task : taskList) {
+            if( blockingUuid.contains(task.getValue("uuid"))) {
+                task.setBlocking(true);
+            }
+            task.calcUrgency();
+
         }
 
         return taskList;
