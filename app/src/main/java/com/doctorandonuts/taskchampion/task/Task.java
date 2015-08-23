@@ -240,11 +240,11 @@ public class Task {
     }
 
 
-    private Boolean isBlocked() {
+    public Boolean isBlocked() {
         return blocked;
     }
 
-    private Boolean isBlocking() {
+    public Boolean isBlocking() {
         return blocking;
     }
 

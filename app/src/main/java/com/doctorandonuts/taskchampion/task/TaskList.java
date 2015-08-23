@@ -35,20 +35,21 @@ public class TaskList {
         List<String> blockingUuid = new ArrayList<>();
 
         for ( Task task : taskHashMap.values() ) {
-            if(task.getValue("status").equals("pending")) {
-                taskList.add(task);
-                if(task.hasValue("depends")) {
-                    String[] depends = task.getValue("depends").split(",");
-                    for (String uuid : depends) {
-                        if(taskHashMap.containsKey(uuid)) {
-                            String dependsStatus = taskHashMap.get(uuid).getValue("status");
-                            if(dependsStatus.equals("pending") || dependsStatus.equals("waiting") || dependsStatus.equals("recuring")) {
-                                task.setBlocked(true);
-                                blockingUuid.add(uuid);
-                            }
+            if(task.hasValue("depends")) {
+                String[] depends = task.getValue("depends").split(",");
+                for (String uuid : depends) {
+                    if(taskHashMap.containsKey(uuid)) {
+                        String dependsStatus = taskHashMap.get(uuid).getValue("status");
+                        if(dependsStatus.equals("pending") || dependsStatus.equals("waiting") || dependsStatus.equals("recuring")) {
+                            task.setBlocked(true);
+                            blockingUuid.add(uuid);
                         }
                     }
                 }
+            }
+
+            if(task.getValue("status").equals("pending") && !task.isBlocked()) {
+                taskList.add(task);
             }
         }
 
