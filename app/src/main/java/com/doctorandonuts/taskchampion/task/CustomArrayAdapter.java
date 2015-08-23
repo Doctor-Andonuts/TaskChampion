@@ -29,7 +29,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
         descriptionTextView.setText(tasks.get(position).getValue("description"));
         TextView urgencyTextView = (TextView) rowView.findViewById(R.id.urgency);
-        String urgencyString = String.format("%.1f", tasks.get(position).getUrgency());
+        String urgencyString = String.format("%.2f", tasks.get(position).getUrgency());
         urgencyTextView.setText(urgencyString);
 
 
