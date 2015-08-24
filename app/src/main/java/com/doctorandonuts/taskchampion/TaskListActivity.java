@@ -18,7 +18,7 @@ import com.doctorandonuts.taskchampion.task.Task;
 import java.util.Comparator;
 
 
-public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener,TaskDetailsFragment.OnFragmentInteractionListener {
+public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener {
 
     private Comparator urgencySort = new Comparator<Task>() {
         @Override
@@ -64,6 +64,8 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             fragment.clearData();
             CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
             adapter.sort(urgencySort);
+        } else if (id == R.id.action_add) {
+            onFragmentInteraction();
         } else if (id == android.R.id.home) {
             getFragmentManager().popBackStack();
             return true;
@@ -78,7 +80,6 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         taskListFragment.refreshData();
         CustomArrayAdapter adapter = (CustomArrayAdapter) taskListFragment.getListAdapter();
         adapter.sort(urgencySort);
-        //adapter.notifyDataSetChanged();
     }
 
     public void onFragmentInteraction(Task task) {
@@ -100,6 +101,12 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
     }
 
     public void onFragmentInteraction() {
-        Log.i("FragmentList", "onFragmentInteraction: Uri");
+        TaskCreateFragment taskCreateFragment = new TaskCreateFragment();
+        TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
+        getFragmentManager().beginTransaction()
+                .remove(taskListFragment)
+                .add(android.R.id.content, taskCreateFragment, "TaskCreateFragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -41,7 +41,7 @@ public class TaskDetailsFragment extends Fragment {
         setHasOptionsMenu(true);
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("");
+        actionBar.setTitle("Details");
     }
 
     @Override

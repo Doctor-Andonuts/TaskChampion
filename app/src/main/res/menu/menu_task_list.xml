@@ -2,14 +2,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".TaskListActivity">
+
+
     <item
-        android:id="@+id/action_clear_all"
-        android:title="@string/action_clear_all"
-        android:orderInCategory="500"
-        android:showAsAction="never" />
+        android:id="@+id/action_add"
+        android:title="@string/action_add"
+        android:orderInCategory="50"
+        android:showAsAction="always" />
     <item
         android:id="@+id/action_sync"
         android:title="@string/action_sync"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/action_clear_all"
+        android:title="@string/action_clear_all"
+        android:orderInCategory="500"
+        android:showAsAction="never" />
+
 </menu>
