@@ -3,7 +3,6 @@ package com.doctorandonuts.taskchampion.task;
 import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -134,6 +133,13 @@ public class TaskList {
         } else {
             taskHashMap.put(newUuid, taskToAdd);
         }
+    }
+
+
+    public void addNewTask(Task taskToAdd) {
+        readPendingFile();
+        taskHashMap.put(taskToAdd.getValue("uuid"), taskToAdd);
+        writePendingFile(arrayListToString());
     }
 
 

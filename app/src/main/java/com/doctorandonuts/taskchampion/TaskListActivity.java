@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +16,14 @@ import android.widget.Toast;
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
 import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
+import com.doctorandonuts.taskchampion.task.TaskList;
 
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.UUID;
 
 
 public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener {
@@ -35,7 +42,9 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
         if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
             TaskListFragment taskListFragment = new TaskListFragment();
-            getFragmentManager().beginTransaction().add(android.R.id.content, taskListFragment, "ArrayListFrag").commit();
+            getFragmentManager().beginTransaction()
+                    .add(android.R.id.content, taskListFragment, "ArrayListFrag")
+                    .commit();
         }
     }
 
@@ -113,8 +122,42 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
 
     public void addTask(View view) {
+        hideSoftKeyboard();
+
         TextView editDescription = (TextView) findViewById(R.id.editDescription);
-        Toast.makeText(getBaseContext(), editDescription.getText(), Toast.LENGTH_SHORT).show();
+        JSONObject newTaskJson = new JSONObject();
+
+        try {
+            String uuid = UUID.randomUUID().toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+            Date now = new Date();
+
+            newTaskJson.put("status", "pending");
+            newTaskJson.put("uuid", uuid);
+            newTaskJson.put("entry", sdf.format(now));
+            newTaskJson.put("description", editDescription.getText());
+        } catch(Exception e) {}
+
+        Task newTask = new Task(newTaskJson);
+
+        TaskList taskList = new TaskList(getBaseContext());
+        taskList.addNewTask(newTask);
+
+        refreshTaskListFragment();
+        TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
+        TaskCreateFragment taskCreateFragment = (TaskCreateFragment) getFragmentManager().findFragmentByTag("TaskCreateFragment");
+        getFragmentManager().beginTransaction()
+                .remove(taskCreateFragment)
+                .add(android.R.id.content, taskListFragment, "ArrayListFrag")
+                .commit();
+
+        Toast.makeText(getBaseContext(), "New Task Added", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
 }
