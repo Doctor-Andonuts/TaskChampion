@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,4 +110,11 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
                 .addToBackStack(null)
                 .commit();
     }
+
+
+    public void addTask(View view) {
+        TextView editDescription = (TextView) findViewById(R.id.editDescription);
+        Toast.makeText(getBaseContext(), editDescription.getText(), Toast.LENGTH_SHORT).show();
+    }
+
 }
