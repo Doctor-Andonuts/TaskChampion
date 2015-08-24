@@ -33,6 +33,18 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         urgencyTextView.setText(urgencyString);
 
 
+        if(tasks.get(position).getValue("tags").contains("someday")) {
+            rowView.setBackgroundColor(0xff01579b);
+            descriptionTextView.setTextColor(0xffffffff);
+            urgencyTextView.setTextColor(0xffdddddd);
+        }
+        if(tasks.get(position).isOverDue()) {
+            rowView.setBackgroundColor(0xffc62828);
+            descriptionTextView.setTextColor(0xffffffff);
+            urgencyTextView.setTextColor(0xffdddddd);
+        }
+
+
         return rowView;
     }
 

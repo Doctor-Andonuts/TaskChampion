@@ -15,6 +15,7 @@ public class Task {
     private Float maxAge = 365.0f;
     private Boolean blocking = false;
     private Boolean blocked = false;
+    private Boolean overdue = false;
 
     private Float urgency;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
@@ -129,8 +130,13 @@ public class Task {
                 long duration  = now.getTime() - taskDueDate.getTime();
                 long daysOverdue = TimeUnit.MILLISECONDS.toDays(duration);
 
-                if(daysOverdue > 7.0f) { return 1.0f; } // < 1 wk ago
-                else if(daysOverdue > -14.0f) { return ((daysOverdue + 14.0f) * 0.8f / 21.0f) + 0.2f; } // > 2 wks
+                if(daysOverdue > 7.0f) {
+                    return 1.0f;
+                } // < 1 wk ago
+                else if(daysOverdue > -14.0f) {
+                    overdue = true;
+                    return ((daysOverdue + 14.0f) * 0.8f / 21.0f) + 0.2f;
+                } // > 2 wks
                 else return 0.2f;
 
             } catch (Exception e) {}
@@ -254,5 +260,9 @@ public class Task {
 
     public void setBlocking(Boolean blocking) {
         this.blocking = blocking;
+    }
+
+    public Boolean isOverDue() {
+        return overdue;
     }
 }
