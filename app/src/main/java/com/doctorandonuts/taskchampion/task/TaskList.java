@@ -18,7 +18,8 @@ import java.util.regex.Pattern;
 
 public class TaskList {
     private String TAG = "TaskListFile";
-    private static final String FILENAME = "pending.data";
+    private static final String PENDING_FILENAME = "pending.data";
+    private static final String BACKLOG_FILENAME = "backlog.data";
     private Context _context;
     private HashMap<String, Task> taskHashMap = new HashMap<>();
 
@@ -69,7 +70,7 @@ public class TaskList {
     private void readPendingFile() {
         taskHashMap.clear();
         try {
-            File file = new File(_context.getFilesDir(), FILENAME);
+            File file = new File(_context.getFilesDir(), PENDING_FILENAME);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String line;
 
@@ -139,13 +140,46 @@ public class TaskList {
     public void addNewTask(Task taskToAdd) {
         readPendingFile();
         taskHashMap.put(taskToAdd.getValue("uuid"), taskToAdd);
+        writeBacklogFile(taskToAdd.getJsonString());
         writePendingFile(arrayListToString());
     }
 
 
     public void writePendingFile(String taskPendingData) {
         try {
-            FileOutputStream fileOutputStream = _context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream fileOutputStream = _context.openFileOutput(PENDING_FILENAME, Context.MODE_PRIVATE);
+            fileOutputStream.write(taskPendingData.getBytes());
+            fileOutputStream.close();
+            Log.d("TaskListFile", "Writing done");
+        } catch (Exception e) {
+            Log.d("TaskListFile", "Problem writing: " + e.toString());
+        }
+    }
+
+
+    public List<Task> readBacklogFile() {
+        List<Task> taskList = new ArrayList<>();
+        try {
+            File file = new File(_context.getFilesDir(), BACKLOG_FILENAME);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line;
+
+            while((line = bufferedReader.readLine()) != null) {
+                Task task = new Task(new JSONObject(line));
+                taskList.add(task);
+            }
+        } catch (Exception e ) {
+            Log.d(TAG, "Problem reading: " + e.toString());
+        }
+
+        Log.d(TAG, "done reading");
+        return taskList;
+    }
+
+
+    public void writeBacklogFile(String taskPendingData) {
+        try {
+            FileOutputStream fileOutputStream = _context.openFileOutput(BACKLOG_FILENAME, Context.MODE_PRIVATE);
             fileOutputStream.write(taskPendingData.getBytes());
             fileOutputStream.close();
             Log.d("TaskListFile", "Writing done");

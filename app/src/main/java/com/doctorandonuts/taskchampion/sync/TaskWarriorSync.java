@@ -7,8 +7,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.TaskListActivity;
+import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskList;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -36,8 +39,18 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         final Msg sync = new Msg();
         sync.clear();
         final StringBuilder payload = new StringBuilder();
-        payload.append(syncKey);
+        payload.append(syncKey + "\n");
+
+        TaskList taskListObject = new TaskList(_context);
+        List<Task> taskList = taskListObject.readBacklogFile();
+        for(Task task : taskList) {
+            payload.append(task.getJsonString());
+        }
+//        String uuid = UUID.randomUUID().toString();
+//        payload.append("{\"description\":\"test\",\"entry\":\"20150825T175211Z\",\"status\":\"pending\",\"uuid\":\""+uuid+"\"}");
+
         sync.setPayload(payload.toString());
+//        Log.d(TAG, "ALL: " + sync.serialize());
         sync.serialize();
 
         TLSClient tlsClient = new TLSClient();
@@ -54,6 +67,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
         tlsClient.send(sync.serialize());
         final String response = tlsClient.recv();
+//        Log.d(TAG, "response: " + response);
         tlsClient.close();
 
         try {
@@ -71,6 +85,9 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
         TaskList taskList = new TaskList(_context);
         taskList.importPayload(payloadData);
+
+        taskList.writeBacklogFile(""); // TODO: Write conditional check that the task get writen to sync server correctly
+        // TODO: Also someone could have written a new task while the async task was in the middle of going and I shouldn't clear it
 
         // Checks for new sync key
         String newSyncKey = "";
