@@ -54,5 +54,10 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         return rowView;
     }
 
+    public void updateTaskList(List<Task> newTaskList) {
+        tasks.clear();
+        tasks.addAll(newTaskList);
+        this.notifyDataSetChanged();
+    }
 
 }

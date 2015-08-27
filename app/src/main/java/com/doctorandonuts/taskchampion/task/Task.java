@@ -69,6 +69,11 @@ public class Task {
         }
         return value;
     }
+    public void setValue(String key, String value) {
+        try {
+            taskJson.put(key, value);
+        } catch (Exception e) {}
+    }
 
     public String getJsonString() {
         return taskJson.toString();

@@ -74,5 +74,9 @@ public class Msg {
         this._payload = input.substring(separator + 2).trim();
     }
 
+    public String getHeaderCode() {
+        return this._header.get("code");
+    }
+
 
 }

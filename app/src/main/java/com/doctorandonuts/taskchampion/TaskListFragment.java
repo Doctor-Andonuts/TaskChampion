@@ -8,11 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
-import com.doctorandonuts.taskchampion.task.TaskList;
+import com.doctorandonuts.taskchampion.task.TaskManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -70,6 +71,7 @@ public class TaskListFragment extends ListFragment {
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), tasks);
         arrayAdapter.sort(urgencySort);
+        arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
     }
 
@@ -92,14 +94,17 @@ public class TaskListFragment extends ListFragment {
     }
 
     public void refreshData() {
-        TaskList taskList = new TaskList(getActivity());
-        tasks = taskList.getTaskList(tasks);
+        TaskManager taskManager = new TaskManager(getActivity());
+//        tasks = taskManager.getPendingTasks();
+        tasks.clear();
+        tasks.addAll(taskManager.getPendingTasks());
         Log.d("FragmentList", "DATA REFRESH");
     }
 
     public void clearData() {
-        TaskList taskList = new TaskList(getActivity());
-        taskList.writePendingFile("");
+        TaskManager taskManager = new TaskManager(getActivity());
+        taskManager.clearFile("pending");
+        taskManager.clearFile("completed");
         tasks.clear();
     }
 

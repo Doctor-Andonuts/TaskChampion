@@ -3,20 +3,18 @@ package com.doctorandonuts.taskchampion;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
 import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
-import com.doctorandonuts.taskchampion.task.TaskList;
+import com.doctorandonuts.taskchampion.task.TaskManager;
 
 import org.json.JSONObject;
 
@@ -73,7 +71,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
             CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
-            adapter.sort(urgencySort);
+            adapter.notifyDataSetChanged();
         } else if (id == R.id.action_add) {
             onFragmentInteraction();
         } else if (id == android.R.id.home) {
@@ -140,8 +138,8 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
         Task newTask = new Task(newTaskJson);
 
-        TaskList taskList = new TaskList(getBaseContext());
-        taskList.addNewTask(newTask);
+        TaskManager taskManager = new TaskManager(getBaseContext());
+        taskManager.addOrUpdateTask(newTask);
 
         refreshTaskListFragment();
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
