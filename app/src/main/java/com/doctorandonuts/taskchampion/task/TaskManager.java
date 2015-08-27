@@ -108,16 +108,26 @@ public class TaskManager {
             } else {
                 // Is in completed file
                 Task oldTask = completedTaskList.get(taskUuid);
+
                 try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
-                    Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
-                    Date parseTaskModified = sdf.parse(task.getValue("modified"));
-                    if( parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
-                        if(task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
-                            completedTaskList.remove(taskUuid);
+                    if(!oldTask.hasValue("modified")) {
+                        if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
                             pendingTaskList.put(taskUuid, task);
                         } else {
+                            pendingTaskList.remove(taskUuid);
                             completedTaskList.put(taskUuid, task);
+                        }
+                    } else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                        Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
+                        Date parseTaskModified = sdf.parse(task.getValue("modified"));
+                        if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
+                            if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                                completedTaskList.remove(taskUuid);
+                                pendingTaskList.put(taskUuid, task);
+                            } else {
+                                completedTaskList.put(taskUuid, task);
+                            }
                         }
                     }
                 } catch (Exception e) {}
@@ -125,17 +135,27 @@ public class TaskManager {
         } else {
             // Is in pending file
             Task oldTask = pendingTaskList.get(taskUuid);
+
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
 
-                Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
-                Date parseTaskModified = sdf.parse(task.getValue("modified"));
-                if( parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
-                    if(task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                if(!oldTask.hasValue("modified")) {
+                    if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
                         pendingTaskList.put(taskUuid, task);
                     } else {
                         pendingTaskList.remove(taskUuid);
                         completedTaskList.put(taskUuid, task);
+                    }
+                } else {
+                    Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
+                    Date parseTaskModified = sdf.parse(task.getValue("modified"));
+                    if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
+                        if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                            pendingTaskList.put(taskUuid, task);
+                        } else {
+                            pendingTaskList.remove(taskUuid);
+                            completedTaskList.put(taskUuid, task);
+                        }
                     }
                 }
             } catch (Exception e) {}
