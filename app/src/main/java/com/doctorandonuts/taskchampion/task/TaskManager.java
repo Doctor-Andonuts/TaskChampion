@@ -99,59 +99,42 @@ public class TaskManager {
     private void addOrUpdateTask(Task task, HashMap<String, Task> pendingTaskList, HashMap<String, Task> completedTaskList) {
         String taskUuid = task.getValue("uuid");
 
-        if(!pendingTaskList.containsKey(taskUuid)) {
-            if(!completedTaskList.containsKey(taskUuid)) {
-                if(task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
-                    pendingTaskList.put(taskUuid, task);
-                } else {
-                    completedTaskList.put(taskUuid, task);
-                }
-            } else {
-                // Is in completed file
-                Task oldTask = completedTaskList.get(taskUuid);
 
-                try {
-                    if(!oldTask.hasValue("modified")) {
-                        if (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
-                            pendingTaskList.put(taskUuid, task);
-                        } else {
-                            pendingTaskList.remove(taskUuid);
-                            completedTaskList.put(taskUuid, task);
-                        }
-                    } else {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
-                        Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
-                        Date parseTaskModified = sdf.parse(task.getValue("modified"));
-                        if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
-                            if (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
-                                completedTaskList.remove(taskUuid);
-                                pendingTaskList.put(taskUuid, task);
-                            } else {
-                                completedTaskList.put(taskUuid, task);
-                            }
-                        }
-                    }
-                } catch (Exception e) {}
+        Boolean isInPendingTaskList = pendingTaskList.containsKey(taskUuid);
+        Boolean isInCompletedTaskList = completedTaskList.containsKey(taskUuid);
+
+        if(!isInPendingTaskList && !isInCompletedTaskList) {
+            if (goesInPendingFile(task)) {
+                pendingTaskList.put(taskUuid, task);
+            } else {
+                completedTaskList.put(taskUuid, task);
             }
         } else {
-            // Is in pending file
-            Task oldTask = pendingTaskList.get(taskUuid);
+            Task oldTask = null;
+
+            if(isInPendingTaskList) {
+                // Is in pending file
+                oldTask = pendingTaskList.get(taskUuid);
+            } else if(isInCompletedTaskList) {
+                // Is in completed file
+                oldTask = completedTaskList.get(taskUuid);
+            }
 
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
-
-                if(!oldTask.hasValue("modified")) {
-                    if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                if (!oldTask.hasValue("modified")) {
+                    if (goesInPendingFile(task)) {
                         pendingTaskList.put(taskUuid, task);
                     } else {
                         pendingTaskList.remove(taskUuid);
                         completedTaskList.put(taskUuid, task);
                     }
                 } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
                     Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
                     Date parseTaskModified = sdf.parse(task.getValue("modified"));
                     if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
-                        if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                        if (goesInPendingFile(task)) {
+                            completedTaskList.remove(taskUuid);
                             pendingTaskList.put(taskUuid, task);
                         } else {
                             pendingTaskList.remove(taskUuid);
@@ -252,6 +235,13 @@ public class TaskManager {
         return returnString;
     }
 
+    private Boolean goesInPendingFile(Task task) {
+        if (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 //    public List<Task> getTaskList(List<Task> taskList) {
