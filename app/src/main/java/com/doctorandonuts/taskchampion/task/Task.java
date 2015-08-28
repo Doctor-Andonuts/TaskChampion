@@ -75,6 +75,17 @@ public class Task {
         } catch (Exception e) {}
     }
 
+    public void done() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+            Date now = new Date();
+
+            setValue("end", sdf.format(now));
+            setValue("modified", sdf.format(now));
+            setValue("status", "completed");
+        } catch (Exception e) {}
+    }
+
     public String getJsonString() {
         return taskJson.toString();
     }

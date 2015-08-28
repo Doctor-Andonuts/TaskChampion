@@ -72,8 +72,10 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             fragment.clearData();
             CustomArrayAdapter adapter = (CustomArrayAdapter) fragment.getListAdapter();
             adapter.notifyDataSetChanged();
+            return true;
         } else if (id == R.id.action_add) {
             onFragmentInteraction();
+            return true;
         } else if (id == android.R.id.home) {
             getFragmentManager().popBackStack();
             return true;
