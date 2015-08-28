@@ -55,7 +55,8 @@ public class TaskManager {
                     Task task = new Task(new JSONObject(aSplitData));
                     addOrUpdateTask(task, pendingTaskList, completedTaskList);
                 } catch (Exception e) {
-                    Log.d(TAG, e.toString());
+                    Log.d(TAG, "importPayload 1: " + e.toString());
+                    Log.d(TAG, "importPayload 1: " + payloadData);
                 }
             }
         }
@@ -142,7 +143,9 @@ public class TaskManager {
                         }
                     }
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.d(TAG, "addOrUpdateTask 1: " + e.toString());
+            }
         }
     }
     private HashMap<String, Task> readFile(String taskFile) {

@@ -43,7 +43,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         TaskManager taskManager = new TaskManager(_context);
         List<Task> taskList = taskManager.getBacklogData();
         for(Task task : taskList) {
-            payload.append(task.getJsonString());
+            payload.append(task.getJsonString() + "\n");
         }
 //        String uuid = UUID.randomUUID().toString();
 //        payload.append("{\"description\":\"test\",\"entry\":\"20150825T175211Z\",\"status\":\"pending\",\"uuid\":\""+uuid+"\"}");
@@ -64,6 +64,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
             Log.e(TAG, e.toString());
         }
 
+        Log.d(TAG, "send: " + sync.serialize());
         tlsClient.send(sync.serialize());
         final String response = tlsClient.recv();
         Log.d(TAG, "response: " + response);

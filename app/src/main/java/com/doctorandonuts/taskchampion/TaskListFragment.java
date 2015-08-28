@@ -104,6 +104,7 @@ public class TaskListFragment extends ListFragment {
         TaskManager taskManager = new TaskManager(getActivity());
         taskManager.clearFile("pending");
         taskManager.clearFile("completed");
+        taskManager.clearFile("backlog");
         tasks.clear();
     }
 
