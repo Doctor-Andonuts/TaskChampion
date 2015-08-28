@@ -100,7 +100,7 @@ public class TaskManager {
 
         if(!pendingTaskList.containsKey(taskUuid)) {
             if(!completedTaskList.containsKey(taskUuid)) {
-                if(task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                if(task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
                     pendingTaskList.put(taskUuid, task);
                 } else {
                     completedTaskList.put(taskUuid, task);
@@ -111,7 +111,7 @@ public class TaskManager {
 
                 try {
                     if(!oldTask.hasValue("modified")) {
-                        if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                        if (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
                             pendingTaskList.put(taskUuid, task);
                         } else {
                             pendingTaskList.remove(taskUuid);
@@ -122,7 +122,7 @@ public class TaskManager {
                         Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
                         Date parseTaskModified = sdf.parse(task.getValue("modified"));
                         if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
-                            if (task.getValue("status").equals("pending") || task.getValue("status").equals("pending") || task.getValue("status").equals("recurring")) {
+                            if (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
                                 completedTaskList.remove(taskUuid);
                                 pendingTaskList.put(taskUuid, task);
                             } else {
@@ -185,8 +185,9 @@ public class TaskManager {
                 Task task = new Task(new JSONObject(line));
                 // I assume everything coming from a file is only 1 uuid per so I can just add them.
                 if(task.getValue("status").equals("waiting")) {
+
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
-                    Date taskWaitDate =   sdf.parse(task.getValue("wait"));
+                    Date taskWaitDate = sdf.parse(task.getValue("wait"));
                     Date now = new Date();
                     if( now.getTime() - taskWaitDate.getTime() > 0) {
                         /*
