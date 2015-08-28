@@ -69,6 +69,7 @@ public class TaskManager {
         HashMap<String, Task> completedTaskList = readFile("completed");
 
         addOrUpdateTask(newTask, pendingTaskList, completedTaskList);
+        appendBacklogFile(newTask.getJsonString() + "\n");
 
         writeFile("pending", taskHashMapToString(pendingTaskList));
         writeFile("completed", taskHashMapToString(completedTaskList));
@@ -205,6 +206,16 @@ public class TaskManager {
 
         Log.d(TAG, "Done reading " + fileName);
         return taskHashMap;
+    }
+    private void appendBacklogFile(String taskData) {
+        try {
+            FileOutputStream fileOutputStream = _context.openFileOutput(BACKLOG_FILENAME, Context.MODE_APPEND);
+            fileOutputStream.write(taskData.getBytes());
+            fileOutputStream.close();
+            Log.d("TaskListFile", "Done Writing data to " + BACKLOG_FILENAME);
+        } catch (Exception e) {
+            Log.d("TaskListFile", "Problem writing data to : " + BACKLOG_FILENAME + e.toString());
+        }
     }
     private void writeFile(String file, String taskPendingData) {
         String fileName;
