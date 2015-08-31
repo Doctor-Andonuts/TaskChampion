@@ -8,5 +8,5 @@
         android:id="@+id/action_done"
         android:title="@string/action_done"
         android:orderInCategory="50"
-        android:showAsAction="always" />
+        android:showAsAction="never" />
 </menu>
