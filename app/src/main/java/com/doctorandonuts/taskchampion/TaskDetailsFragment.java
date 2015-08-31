@@ -74,6 +74,8 @@ public class TaskDetailsFragment extends Fragment {
         ((TextView) view.findViewById(R.id.dependsText)).setText(task.getValue("depends"));
         ((TextView) view.findViewById(R.id.modifiedText)).setText(task.getValue("modified"));
         ((TextView) view.findViewById(R.id.uuidText)).setText(task.getValue("uuid"));
+        ((TextView) view.findViewById(R.id.isBlockedText)).setText(task.isBlocked().toString());
+        ((TextView) view.findViewById(R.id.isBlockingText)).setText(task.isBlocking().toString());
         super.onViewCreated(view, savedInstanceState);
     }
 

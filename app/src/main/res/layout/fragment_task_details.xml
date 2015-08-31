@@ -1,172 +1,203 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.doctorandonuts.taskchampion.TaskDetailsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Description"
-        android:id="@+id/descriptionText" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Status: "
-            android:id="@+id/statusLabel" />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/statusText" />
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Description"
+            android:id="@+id/descriptionText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Status: "
+                android:id="@+id/statusLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/statusText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Project: "
+                android:id="@+id/projectLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/projectText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Entry: "
+                android:id="@+id/entryLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/entryText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Due: "
+                android:id="@+id/dueLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/dueText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Tags: "
+                android:id="@+id/tagsLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/tagsText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="End: "
+                android:id="@+id/endLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/endText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Wait: "
+                android:id="@+id/waitLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/waitText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Annotation: "
+                android:id="@+id/annotationLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/annotationText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Priority: "
+                android:id="@+id/priorityLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/priorityText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="depends: "
+                android:id="@+id/dependsLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/dependsText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Modified: "
+                android:id="@+id/modifiedLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/modifiedText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="UUID: "
+                android:id="@+id/uuidLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/uuidText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="isBlocked: "
+                android:id="@+id/isBlockedLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/isBlockedText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="isBlocking: "
+                android:id="@+id/isBlockingLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/isBlockingText" />
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Project: "
-            android:id="@+id/projectLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/projectText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Entry: "
-            android:id="@+id/entryLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/entryText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Due: "
-            android:id="@+id/dueLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/dueText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Tags: "
-            android:id="@+id/tagsLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/tagsText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="End: "
-            android:id="@+id/endLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/endText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Wait: "
-            android:id="@+id/waitLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/waitText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Annotation: "
-            android:id="@+id/annotationLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/annotationText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Priority: "
-            android:id="@+id/priorityLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/priorityText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="depends: "
-            android:id="@+id/dependsLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/dependsText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Modified: "
-            android:id="@+id/modifiedLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/modifiedText" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="UUID: "
-            android:id="@+id/uuidLabel" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/uuidText" />
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>

@@ -32,9 +32,32 @@ public class TaskManager {
     public List<Task> getPendingTasks() {
         List<Task> returnTaskList = new ArrayList<>();
         HashMap<String, Task> hashMapTaskList = readFile("pending");
+        List<String> blockingUuid = new ArrayList<>();
 
-        for (Task task : hashMapTaskList.values()){
-            if(task.getValue("status").equals("pending")) {
+        for (Task task : hashMapTaskList.values()) {
+            if (task.hasValue("depends")) {
+                String[] depends = task.getValue("depends").split(",");
+                for (String uuid : depends) {
+                    if (hashMapTaskList.containsKey(uuid)) {
+                        String dependsStatus = hashMapTaskList.get(uuid).getValue("status");
+                        if (dependsStatus.equals("pending") || dependsStatus.equals("waiting") || dependsStatus.equals("recuring")) {
+                            task.setBlocked(true);
+                            blockingUuid.add(uuid);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (String uuid : blockingUuid) {
+            if( hashMapTaskList.containsKey(uuid)) {
+                hashMapTaskList.get(uuid).setBlocking(true);
+            }
+        }
+
+
+        for (Task task : hashMapTaskList.values()) {
+            if(task.getValue("status").equals("pending") && !task.isBlocked()) {
                 task.calcUrgency();
                 returnTaskList.add(task);
             }
@@ -245,152 +268,5 @@ public class TaskManager {
             return false;
         }
     }
-
-
-//    public List<Task> getTaskList(List<Task> taskList) {
-//        readPendingFile();
-//        taskList.clear();
-//        List<String> blockingUuid = new ArrayList<>();
-//
-//        for ( Task task : taskHashMap.values() ) {
-//            // Figure out blocking and blocked tasks
-//            if(task.hasValue("depends")) {
-//                String[] depends = task.getValue("depends").split(",");
-//                for (String uuid : depends) {
-//                    if(taskHashMap.containsKey(uuid)) {
-//                        String dependsStatus = taskHashMap.get(uuid).getValue("status");
-//                        if(dependsStatus.equals("pending") || dependsStatus.equals("waiting") || dependsStatus.equals("recuring")) {
-//                            task.setBlocked(true);
-//                            blockingUuid.add(uuid);
-//                        }
-//                    }
-//                }
-//            }
-//
-//            // Add tasks to List that fit the criteria
-//            if(task.getValue("status").equals("pending") && !task.isBlocked()) {
-//                taskList.add(task);
-//            }
-//        }
-//
-//        for (Task task : taskList) {
-//            if( blockingUuid.contains(task.getValue("uuid"))) {
-//                task.setBlocking(true);
-//            }
-//            task.calcUrgency();
-//
-//        }
-//
-//        return taskList;
-//    }
-//    public void importPayload(String payloadData) {
-//        Log.d(TAG, "trying import");
-//        readPendingFile();
-//
-//        String[] splitData = payloadData.split("\n");
-//        for (String aSplitData : splitData) {
-//            if (!Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", aSplitData)) {
-//                try {
-//                    addTask(new Task(new JSONObject(aSplitData)));
-//                } catch (Exception e) {
-//                    Log.d(TAG, e.toString());
-//                }
-//            }
-//        }
-//
-//        Log.d(TAG, "trying write");
-//        writePendingFile(taskHashMapToString());
-//    }
-//    public void addNewTask(Task taskToAdd) {
-//        readPendingFile();
-//        taskHashMap.put(taskToAdd.getValue("uuid"), taskToAdd);
-//        writeBacklogFile(taskToAdd.getJsonString());
-//        writePendingFile(taskHashMapToString());
-//    }
-//    public List<Task> readBacklogFile() {
-//        List<Task> taskList = new ArrayList<>();
-//        try {
-//            File file = new File(_context.getFilesDir(), BACKLOG_FILENAME);
-//            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-//            String line;
-//
-//            while((line = bufferedReader.readLine()) != null) {
-//                Task task = new Task(new JSONObject(line));
-//                taskList.add(task);
-//            }
-//        } catch (Exception e ) {
-//            Log.d(TAG, "Problem reading: " + e.toString());
-//        }
-//
-//        Log.d(TAG, "done reading");
-//        return taskList;
-//    } // DONE
-//    private void readPendingFile() {
-//        taskHashMap.clear();
-//        try {
-//            File file = new File(_context.getFilesDir(), PENDING_FILENAME);
-//            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-//            String line;
-//
-//            while((line = bufferedReader.readLine()) != null) {
-//                Task task = new Task(new JSONObject(line));
-//                taskHashMap.put(task.getValue("uuid"), task);
-//            }
-//        } catch (Exception e ) {
-//            Log.d(TAG, "Problem reading: " + e.toString());
-//        }
-//
-//        Log.d(TAG, "done reading");
-//    } // DONE
-//
-//    public void writePendingFile(String taskPendingData) {
-//        try {
-//            FileOutputStream fileOutputStream = _context.openFileOutput(PENDING_FILENAME, Context.MODE_PRIVATE);
-//            fileOutputStream.write(taskPendingData.getBytes());
-//            fileOutputStream.close();
-//            Log.d("TaskListFile", "Writing done");
-//        } catch (Exception e) {
-//            Log.d("TaskListFile", "Problem writing: " + e.toString());
-//        }
-//    } // DONE
-//    public void writeBacklogFile(String taskPendingData) {
-//        try {
-//            FileOutputStream fileOutputStream = _context.openFileOutput(BACKLOG_FILENAME, Context.MODE_PRIVATE);
-//            fileOutputStream.write(taskPendingData.getBytes());
-//            fileOutputStream.close();
-//            Log.d("TaskListFile", "Writing done");
-//        } catch (Exception e) {
-//            Log.d("TaskListFile", "Problem writing: " + e.toString());
-//        }
-//    } // DONE
-//
-//    private String taskHashMapToString() {
-//        String returnString = "";
-//        for (Task task : taskHashMap.values()) {
-//            returnString += task.getJsonString() + "\n";
-//        }
-//
-//        return returnString;
-//    }
-//    private void addTask(Task taskToAdd) {
-//        String newUuid = taskToAdd.getValue("uuid");
-//
-//        if(taskHashMap.containsKey(newUuid)) {
-//            try {
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
-//                Date currentTaskDate = sdf.parse(taskHashMap.get(newUuid).getValue("modified"));
-//                Date newTaskDate = sdf.parse(taskToAdd.getValue("modified"));
-//
-//                if(newTaskDate.after(currentTaskDate)) {
-//                    taskHashMap.put(newUuid, taskToAdd);
-//                }
-//            } catch (Exception e) {
-//                Log.d(TAG, e.toString());
-//            }
-//        } else {
-//            taskHashMap.put(newUuid, taskToAdd);
-//        }
-//    }
-
 
 }
