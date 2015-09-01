@@ -1,7 +1,9 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.doctorandonuts.taskchampion.task.TaskManager;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.UUID;
@@ -75,6 +78,49 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             return true;
         } else if (id == R.id.action_add) {
             onFragmentInteraction();
+            return true;
+        } else if (id == R.id.action_filter_tags) {
+            AlertDialog dialog;
+            final CharSequence[] items = {" Easy "," Medium "," Hard "," Very Hard "};
+            // arraylist to keep the selected items
+            final ArrayList seletedItems=new ArrayList();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Select The Difficulty Level");
+            builder.setMultiChoiceItems(items, null,
+                    new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int indexSelected,
+                                            boolean isChecked) {
+                            if (isChecked) {
+                                // If the user checked the item, add it to the selected items
+                                seletedItems.add(indexSelected);
+                            } else if (seletedItems.contains(indexSelected)) {
+                                // Else, if the item is already in the array, remove it
+                                seletedItems.remove(Integer.valueOf(indexSelected));
+                            }
+                        }
+                    })
+                    // Set the action buttons
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Your code when user clicked on OK
+                            //  You can write the code  to save the selected item here
+                            Toast.makeText(getBaseContext(), "selected: " + seletedItems.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Your code when user clicked on Cancel
+
+                        }
+                    });
+
+            dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+            dialog.show();
+
             return true;
         } else if (id == android.R.id.home) {
             getFragmentManager().popBackStack();
