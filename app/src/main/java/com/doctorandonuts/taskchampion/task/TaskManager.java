@@ -77,8 +77,6 @@ public class TaskManager {
                     if (task.hasValue("tags")) {
                         try {
                             JSONArray tags = new JSONArray(task.getValue("tags"));
-                            Log.d(TAG, "tags: " + task.getValue("tags"));
-                            Log.d(TAG, "tagFilter: " + tagFilter.toString());
                             for (int i = 0; i < tags.length(); i++) {
                                 if (tagFilter.contains(tags.get(i))) {
                                     task.calcUrgency();
