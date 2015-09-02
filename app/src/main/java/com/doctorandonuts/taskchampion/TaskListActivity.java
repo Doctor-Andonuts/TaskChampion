@@ -82,6 +82,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             return true;
         } else if (id == R.id.action_set_context) {
             AlertDialog levelDialog;
+            final TextView contextTextView = (TextView) findViewById(R.id.contextTextView);
 
             // Strings to Show In Dialog with Radio Buttons
             final CharSequence[] items = {"Home","Work","None"};
@@ -94,16 +95,18 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
                     SharedPreferences sharedPref = getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
 
-                    switch(item)
-                    {
+                    switch (item) {
                         case 0:
                             editor.putString("context", "home");
+                            contextTextView.setText("Context: Home");
                             break;
                         case 1:
                             editor.putString("context", "work");
+                            contextTextView.setText("Context: Work");
                             break;
                         case 2:
                             editor.putString("context", "");
+                            contextTextView.setText("Context: None");
                             break;
                     }
                     editor.apply();
