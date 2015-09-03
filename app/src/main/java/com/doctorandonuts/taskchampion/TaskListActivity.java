@@ -198,6 +198,10 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         Toast.makeText(getBaseContext(), "New Task Added", Toast.LENGTH_SHORT).show();
     }
 
+    public void editDescription(View view) {
+        Toast.makeText(getBaseContext(), "editting!", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void hideSoftKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
