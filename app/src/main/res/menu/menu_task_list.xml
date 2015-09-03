@@ -10,8 +10,8 @@
         android:orderInCategory="50"
         android:showAsAction="always" />
     <item
-        android:id="@+id/action_filter_tags"
-        android:title="@string/action_filter_tags"
+        android:id="@+id/action_set_context"
+        android:title="@string/action_set_context"
         android:orderInCategory="75"
         android:showAsAction="never" />
     <item

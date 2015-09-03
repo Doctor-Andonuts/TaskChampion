@@ -70,6 +70,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             SharedPreferences sharedPref = getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("syncKey", "");
+            editor.putString("context", "");
             editor.apply();
             TaskListFragment fragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
             fragment.clearData();
@@ -79,47 +80,39 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         } else if (id == R.id.action_add) {
             onFragmentInteraction();
             return true;
-        } else if (id == R.id.action_filter_tags) {
-            AlertDialog dialog;
-            final CharSequence[] items = {" Easy "," Medium "," Hard "," Very Hard "};
-            // arraylist to keep the selected items
-            final ArrayList seletedItems=new ArrayList();
+        } else if (id == R.id.action_set_context) {
+            AlertDialog levelDialog;
 
+            // Strings to Show In Dialog with Radio Buttons
+            final CharSequence[] items = {"Home","Work","None"};
+
+            // Creating and Building the Dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Select The Difficulty Level");
-            builder.setMultiChoiceItems(items, null,
-                    new DialogInterface.OnMultiChoiceClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int indexSelected,
-                                            boolean isChecked) {
-                            if (isChecked) {
-                                // If the user checked the item, add it to the selected items
-                                seletedItems.add(indexSelected);
-                            } else if (seletedItems.contains(indexSelected)) {
-                                // Else, if the item is already in the array, remove it
-                                seletedItems.remove(Integer.valueOf(indexSelected));
-                            }
-                        }
-                    })
-                    // Set the action buttons
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            //  Your code when user clicked on OK
-                            //  You can write the code  to save the selected item here
-                            Toast.makeText(getBaseContext(), "selected: " + seletedItems.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            //  Your code when user clicked on Cancel
+            builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    SharedPreferences sharedPref = getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
 
-                        }
-                    });
-
-            dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-            dialog.show();
+                    switch(item)
+                    {
+                        case 0:
+                            editor.putString("context", "home");
+                            break;
+                        case 1:
+                            editor.putString("context", "work");
+                            break;
+                        case 2:
+                            editor.putString("context", "");
+                            break;
+                    }
+                    editor.apply();
+                    dialog.dismiss();
+                    refreshTaskListFragment();
+                }
+            });
+            levelDialog = builder.create();
+            levelDialog.show();
 
             return true;
         } else if (id == android.R.id.home) {

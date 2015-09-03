@@ -1,8 +1,10 @@
 package com.doctorandonuts.taskchampion.task;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -34,6 +36,19 @@ public class TaskManager {
         HashMap<String, Task> hashMapTaskList = readFile("pending");
         List<String> blockingUuid = new ArrayList<>();
 
+        SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+        String context = sharedPref.getString("context", "");
+
+        List<String> tagFilter = new ArrayList<>();
+        tagFilter.clear();
+        if(context.equals("home")) {
+            tagFilter.add("home");
+            tagFilter.add("computer");
+        } else if(context.equals("work")) {
+            tagFilter.add("work");
+            tagFilter.add("computer");
+        }
+
         for (Task task : hashMapTaskList.values()) {
             if (task.hasValue("depends")) {
                 String[] depends = task.getValue("depends").split(",");
@@ -58,8 +73,26 @@ public class TaskManager {
 
         for (Task task : hashMapTaskList.values()) {
             if(task.getValue("status").equals("pending") && !task.isBlocked()) {
-                task.calcUrgency();
-                returnTaskList.add(task);
+                if(!tagFilter.isEmpty()) {
+                    if (task.hasValue("tags")) {
+                        try {
+                            JSONArray tags = new JSONArray(task.getValue("tags"));
+                            Log.d(TAG, "tags: " + task.getValue("tags"));
+                            Log.d(TAG, "tagFilter: " + tagFilter.toString());
+                            for (int i = 0; i < tags.length(); i++) {
+                                if (tagFilter.contains(tags.get(i))) {
+                                    task.calcUrgency();
+                                    returnTaskList.add(task);
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.d(TAG, "ARG");
+                        }
+                    }
+                } else {
+                    task.calcUrgency();
+                    returnTaskList.add(task);
+                }
             }
         }
 
