@@ -26,33 +26,33 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.task_list_item, parent, false);
+
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
         descriptionTextView.setText(tasks.get(position).getValue("description"));
+
+        TextView projectTextView = (TextView) rowView.findViewById(R.id.project);
+        projectTextView.setText(tasks.get(position).getValue("project"));
+
         TextView urgencyTextView = (TextView) rowView.findViewById(R.id.urgency);
         String urgencyString = String.format("%.2f", tasks.get(position).getUrgency());
         urgencyTextView.setText(urgencyString);
-
 
         String tags = tasks.get(position).getValue("tags");
         if(tags.contains("home") || tags.contains("computer") || tags.contains("errand")) {
             rowView.setBackgroundColor(0xff2e7d32);
             descriptionTextView.setTextColor(0xffffffff);
-            urgencyTextView.setTextColor(0xffbbbbbb);
         }
         if(tags.contains("someday")) {
             rowView.setBackgroundColor(0xff01579b);
             descriptionTextView.setTextColor(0xffffffff);
-            urgencyTextView.setTextColor(0xffbbbbbb);
         }
         if(tasks.get(position).isOverDue()) {
             rowView.setBackgroundColor(0xffc62828);
             descriptionTextView.setTextColor(0xffffffff);
-            urgencyTextView.setTextColor(0xffbbbbbb);
         }
         if(tags.contains("next")) {
             rowView.setBackgroundColor(0xff827717);
             descriptionTextView.setTextColor(0xffffffff);
-            urgencyTextView.setTextColor(0xffbbbbbb);
         }
 
 
