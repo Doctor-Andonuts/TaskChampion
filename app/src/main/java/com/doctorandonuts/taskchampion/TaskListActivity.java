@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 
@@ -173,6 +174,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             String uuid = UUID.randomUUID().toString();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
             Date now = new Date();
+            sdf.setTimeZone(TimeZone.getTimeZone("est"));
 
             newTaskJson.put("status", "pending");
             newTaskJson.put("uuid", uuid);

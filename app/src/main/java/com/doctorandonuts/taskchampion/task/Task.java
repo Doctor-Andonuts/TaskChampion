@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class Task {
@@ -77,8 +78,8 @@ public class Task {
 
     public void done() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
             Date now = new Date();
+            sdf.setTimeZone(TimeZone.getTimeZone("est"));
 
             setValue("end", sdf.format(now));
             setValue("modified", sdf.format(now));
