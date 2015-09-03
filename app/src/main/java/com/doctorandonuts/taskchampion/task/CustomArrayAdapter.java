@@ -50,9 +50,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Task> {
             urgencyTextView.setTextColor(0xffbbbbbb);
         }
         if(tags.contains("next")) {
-            rowView.setBackgroundColor(0xfffbc02d);
-            descriptionTextView.setTextColor(0xff000000);
-            urgencyTextView.setTextColor(0xff999999);
+            rowView.setBackgroundColor(0xff827717);
+            descriptionTextView.setTextColor(0xffffffff);
+            urgencyTextView.setTextColor(0xffbbbbbb);
         }
 
 
