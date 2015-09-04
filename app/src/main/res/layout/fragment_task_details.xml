@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Status: "
+                android:text="@string/details_status"
                 android:id="@+id/statusLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Project: "
+                android:text="@string/details_project"
                 android:id="@+id/projectLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Due: "
+                android:text="@string/details_due"
                 android:id="@+id/dueLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Tags: "
+                android:text="@string/details_tags"
                 android:id="@+id/tagsLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Wait: "
+                android:text="@string/details_wait"
                 android:id="@+id/waitLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Annotation: "
+                android:text="@string/details_annotation"
                 android:id="@+id/annotationLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Priority: "
+                android:text="@string/details_priority"
                 android:id="@+id/priorityLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="depends: "
+                android:text="@string/details_depends"
                 android:id="@+id/dependsLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Entry: "
+                android:text="@string/details_entry"
                 android:id="@+id/entryLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Modified: "
+                android:text="@string/details_modified"
                 android:id="@+id/modifiedLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="End: "
+                android:text="@string/details_end"
                 android:id="@+id/endLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="isBlocked: "
+                android:text="@string/details_blocked"
                 android:id="@+id/isBlockedLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="isBlocking: "
+                android:text="@string/details_blocking"
                 android:id="@+id/isBlockingLabel" />
             <TextView
                 android:layout_width="wrap_content"
@@ -173,7 +173,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="UUID: "
+                android:text="@string/details_uuid"
                 android:id="@+id/uuidLabel" />
             <TextView
                 android:layout_width="wrap_content"

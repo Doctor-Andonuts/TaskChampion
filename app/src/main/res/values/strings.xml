@@ -5,4 +5,21 @@
     <string name="action_add">Add</string>
     <string name="action_done">Done</string>
     <string name="action_set_context">Set Context</string>
+
+
+    <string name="details_depends">Depends: </string>
+    <string name="details_priority">Priority: </string>
+    <string name="details_status">Status: </string>
+    <string name="details_project">Project: </string>
+    <string name="details_due">Due: </string>
+    <string name="details_tags">Tags: </string>
+    <string name="details_wait">Wait: </string>
+    <string name="details_annotation">Annotation: </string>
+    <string name="details_entry">Entry: </string>
+    <string name="details_modified">Modified: </string>
+    <string name="details_end">End: </string>
+    <string name="details_blocked">Blocked: </string>
+    <string name="details_blocking">Blocking: </string>
+    <string name="details_uuid">UUID: </string>
+
 </resources>
