@@ -15,13 +15,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Description"
-            android:id="@+id/descriptionText" />
+            android:id="@+id/descriptionText"
+            android:textStyle="bold"
+            android:layout_margin="10dp"/>
 
         <View style="@style/Divider"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -32,9 +33,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/statusText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -45,9 +44,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/projectText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -58,9 +55,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/entryText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -71,9 +66,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/dueText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -84,9 +77,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/tagsText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -97,9 +88,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/endText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -110,9 +99,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/waitText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -123,9 +110,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/annotationText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -136,9 +121,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/priorityText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -149,9 +132,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/dependsText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -162,9 +143,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/modifiedText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -175,9 +154,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/uuidText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -188,9 +165,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/isBlockedText" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
+        <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
