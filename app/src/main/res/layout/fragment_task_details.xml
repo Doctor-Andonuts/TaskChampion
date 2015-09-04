@@ -7,14 +7,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Description"
+            android:text="@string/details_description"
             android:id="@+id/descriptionText"
             android:textStyle="bold"
             android:layout_margin="10dp"/>
@@ -24,90 +24,114 @@
 
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_status"
                 android:id="@+id/statusLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/statusText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_project"
                 android:id="@+id/projectLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/projectText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_due"
                 android:id="@+id/dueLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/dueText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_tags"
                 android:id="@+id/tagsLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/tagsText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_wait"
                 android:id="@+id/waitLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/waitText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_annotation"
                 android:id="@+id/annotationLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/annotationText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_priority"
                 android:id="@+id/priorityLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/priorityText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_depends"
                 android:id="@+id/dependsLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/dependsText" />
         </LinearLayout>
 
@@ -116,68 +140,86 @@
 
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_entry"
                 android:id="@+id/entryLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/entryText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_modified"
                 android:id="@+id/modifiedLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/modifiedText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_end"
                 android:id="@+id/endLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/endText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_blocked"
                 android:id="@+id/isBlockedLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/isBlockedText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_blocking"
                 android:id="@+id/isBlockingLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/isBlockingText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/details_uuid"
                 android:id="@+id/uuidLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:id="@+id/uuidText" />
         </LinearLayout>
 
