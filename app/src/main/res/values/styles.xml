@@ -9,11 +9,19 @@
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
-    <style name="infoDump">
+    <style name="details_fragment_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+    <style name="details_fragment_line_left">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="details_fragment_line_right">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
 </resources>
