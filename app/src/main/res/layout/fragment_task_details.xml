@@ -25,105 +25,73 @@
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_status"
                 android:id="@+id/statusLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/statusText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_project"
                 android:id="@+id/projectLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/projectText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_due"
                 android:id="@+id/dueLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/dueText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_tags"
                 android:id="@+id/tagsLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/tagsText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_wait"
                 android:id="@+id/waitLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/waitText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_annotation"
                 android:id="@+id/annotationLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/annotationText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_priority"
                 android:id="@+id/priorityLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/priorityText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_depends"
                 android:id="@+id/dependsLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/dependsText" />
         </LinearLayout>
 
@@ -133,79 +101,55 @@
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_entry"
                 android:id="@+id/entryLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/entryText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_modified"
                 android:id="@+id/modifiedLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/modifiedText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_end"
                 android:id="@+id/endLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/endText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_blocked"
                 android:id="@+id/isBlockedLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/isBlockedText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_blocking"
                 android:id="@+id/isBlockingLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/isBlockingText" />
         </LinearLayout>
         <LinearLayout style="@style/details_fragment_line">
             <TextView
                 style="@style/details_fragment_line_left"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
                 android:text="@string/details_uuid"
                 android:id="@+id/uuidLabel" />
             <TextView
                 style="@style/details_fragment_line_right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/uuidText" />
         </LinearLayout>
 
