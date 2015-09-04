@@ -49,17 +49,6 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Entry: "
-                android:id="@+id/entryLabel" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/entryText" />
-        </LinearLayout>
-        <LinearLayout style="@style/infoDump">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
                 android:text="Due: "
                 android:id="@+id/dueLabel" />
             <TextView
@@ -77,17 +66,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/tagsText" />
-        </LinearLayout>
-        <LinearLayout style="@style/infoDump">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:text="End: "
-                android:id="@+id/endLabel" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/endText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
@@ -133,6 +111,21 @@
                 android:layout_height="match_parent"
                 android:id="@+id/dependsText" />
         </LinearLayout>
+
+        <View style="@style/Divider"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout style="@style/infoDump">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Entry: "
+                android:id="@+id/entryLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/entryText" />
+        </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
                 android:layout_width="80dp"
@@ -148,12 +141,12 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="UUID: "
-                android:id="@+id/uuidLabel" />
+                android:text="End: "
+                android:id="@+id/endLabel" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/uuidText" />
+                android:id="@+id/endText" />
         </LinearLayout>
         <LinearLayout style="@style/infoDump">
             <TextView
@@ -177,5 +170,17 @@
                 android:layout_height="match_parent"
                 android:id="@+id/isBlockingText" />
         </LinearLayout>
+        <LinearLayout style="@style/infoDump">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="UUID: "
+                android:id="@+id/uuidLabel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/uuidText" />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
