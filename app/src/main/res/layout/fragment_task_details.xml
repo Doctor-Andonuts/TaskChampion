@@ -17,6 +17,8 @@
             android:text="Description"
             android:id="@+id/descriptionText" />
 
+        <View style="@style/Divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp">
