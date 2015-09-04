@@ -2,8 +2,10 @@ package com.doctorandonuts.taskchampion;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +27,14 @@ import com.doctorandonuts.taskchampion.task.TaskManager;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 
 public class TaskDetailsFragment extends Fragment {
     private Task task;
+    private TextView descriptionTextView;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -61,7 +69,15 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((TextView) view.findViewById(R.id.descriptionText)).setText(task.getValue("description"));
+        descriptionTextView = (TextView) view.findViewById(R.id.descriptionText);
+        descriptionTextView.setText(task.getValue("description"));
+        descriptionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editDescription();
+            }
+        });
+
         ((TextView) view.findViewById(R.id.statusText)).setText(task.getValue("status"));
         ((TextView) view.findViewById(R.id.entryText)).setText(task.getValue("entry"));
         ((TextView) view.findViewById(R.id.projectText)).setText(task.getValue("project"));
@@ -145,5 +161,41 @@ public class TaskDetailsFragment extends Fragment {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+
+    public void editDescription() {
+        // Creating and Building the Dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Edit Descrption");
+        builder.setCancelable(true);
+        final EditText descriptionInput = new EditText(getActivity());
+        descriptionInput.setText(descriptionTextView.getText());
+        builder.setView(descriptionInput);
+
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                Date now = new Date();
+                sdf.setTimeZone(TimeZone.getTimeZone("est"));
+
+                task.setValue("modified", sdf.format(now));
+                task.setValue("description", descriptionInput.getText().toString());
+                descriptionTextView.setText(descriptionInput.getText());
+
+                TaskManager taskManager = new TaskManager(getActivity());
+                taskManager.addOrUpdateTask(task);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }

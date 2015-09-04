@@ -11,13 +11,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Description"
             android:id="@+id/descriptionText"
             android:textStyle="bold"
-            android:onClick="editDescription"
             android:layout_margin="10dp"/>
 
         <View style="@style/Divider"/>
