@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class TaskManager {
@@ -184,7 +185,7 @@ public class TaskManager {
                         completedTaskList.put(taskUuid, task);
                     }
                 } else {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                     Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
                     Date parseTaskModified = sdf.parse(task.getValue("modified"));
                     if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
@@ -227,7 +228,7 @@ public class TaskManager {
                 // I assume everything coming from a file is only 1 uuid per so I can just add them.
                 if(task.getValue("status").equals("waiting")) {
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                     Date taskWaitDate = sdf.parse(task.getValue("wait"));
                     Date now = new Date();
                     if( now.getTime() - taskWaitDate.getTime() > 0) {
@@ -293,11 +294,7 @@ public class TaskManager {
     }
 
     private Boolean goesInPendingFile(Task task) {
-        if (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (task.getValue("status").equals("pending") || task.getValue("status").equals("waiting") || task.getValue("status").equals("recurring"));
     }
 
 }

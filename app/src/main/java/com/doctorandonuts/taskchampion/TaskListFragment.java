@@ -17,19 +17,11 @@ import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskManager;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class TaskListFragment extends ListFragment {
     private List<Task> tasks = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
-    private Comparator urgencySort = new Comparator<Task>() {
-        @Override
-        public int compare(Task lhs, Task rhs) {
-            return rhs.getUrgency().compareTo(lhs.getUrgency());
-        }
-    };
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -61,6 +53,7 @@ public class TaskListFragment extends ListFragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         setHasOptionsMenu(true);
+        assert getActivity().getActionBar() != null;
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("TaskChampion");
@@ -78,7 +71,8 @@ public class TaskListFragment extends ListFragment {
         refreshData();
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), tasks);
-        arrayAdapter.sort(urgencySort);
+        TaskComparator taskComparator = new TaskComparator();
+        arrayAdapter.sort(taskComparator);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
     }

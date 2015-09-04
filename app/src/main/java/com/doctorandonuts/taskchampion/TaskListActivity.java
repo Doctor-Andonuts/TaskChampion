@@ -21,21 +21,15 @@ import com.doctorandonuts.taskchampion.task.TaskManager;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
 
 
 public class TaskListActivity extends Activity implements TaskListFragment.OnFragmentInteractionListener {
 
-    private Comparator urgencySort = new Comparator<Task>() {
-        @Override
-        public int compare(Task lhs, Task rhs) {
-            return rhs.getUrgency().compareTo(lhs.getUrgency());
-        }
-    };
+
 
 
     @Override
@@ -132,7 +126,8 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("ArrayListFrag");
         taskListFragment.refreshData();
         CustomArrayAdapter adapter = (CustomArrayAdapter) taskListFragment.getListAdapter();
-        adapter.sort(urgencySort);
+        TaskComparator taskComparator = new TaskComparator();
+        adapter.sort(taskComparator);
     }
 
     public void onFragmentInteraction(Task task) {
@@ -165,14 +160,14 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
 
     public void addTask(View view) {
-        hideSoftKeyboard();
+        hideSoftKeyboard(view);
 
         TextView editDescription = (TextView) findViewById(R.id.editDescription);
         JSONObject newTaskJson = new JSONObject();
 
         try {
             String uuid = UUID.randomUUID().toString();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
             Date now = new Date();
             sdf.setTimeZone(TimeZone.getTimeZone("est"));
 
@@ -180,7 +175,9 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             newTaskJson.put("uuid", uuid);
             newTaskJson.put("entry", sdf.format(now));
             newTaskJson.put("description", editDescription.getText());
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            Log.e("Activity", "I DONT KNOW");
+        }
 
         Task newTask = new Task(newTaskJson);
 
@@ -199,9 +196,9 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
     }
 
 
-    private void hideSoftKeyboard() {
+    private void hideSoftKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

@@ -1,24 +1,26 @@
 package com.doctorandonuts.taskchampion.task;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class Task {
     private JSONObject taskJson;
     private String TAG = "TaskClass";
-    private Float maxAge = 365.0f;
     private Boolean blocking = false;
     private Boolean blocked = false;
     private Boolean overdue = false;
 
     private Float urgency;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
 
     public Task(JSONObject taskJson) {
         this.taskJson = taskJson;
@@ -73,7 +75,9 @@ public class Task {
     public void setValue(String key, String value) {
         try {
             taskJson.put(key, value);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Log.e(TAG, "setValue Error");
+        }
     }
 
     public void done() {
@@ -84,7 +88,9 @@ public class Task {
             setValue("end", sdf.format(now));
             setValue("modified", sdf.format(now));
             setValue("status", "completed");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Log.e(TAG, "done Error");
+        }
     }
 
     public String getJsonString() {
@@ -155,11 +161,15 @@ public class Task {
                 } // > 2 wks
                 else return 0.2f;
 
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.e(TAG, "urgency_due Error");
+            }
         }
         return 0.0f;
     }
     private Float urgency_age() {
+        Float maxAge = 365.0f;
+
         if(hasValue("entry")) {
             try {
                 Date taskEntryDate =   sdf.parse(getValue("entry"));   // initialize start date
@@ -170,7 +180,9 @@ public class Task {
                 if(age > maxAge) { return 1.0f; } // < 1 wk ago
                 return (1.0f * age / maxAge);
 
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.e(TAG, "urgency_age Error");
+            }
         }
         return 0.0f;
     }
@@ -182,7 +194,9 @@ public class Task {
 
                 if(taskEntryDate.getTime() < now.getTime() ) { return 1.0f; } // < 1 wk ago
 
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.e(TAG, "urgency_scheduled Error");
+            }
         }
         return 0.0f;
     }
@@ -226,12 +240,14 @@ public class Task {
                     case 2: return 0.9f;
                     default: return 1.0f;
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.e(TAG, "urgency_tags Error");
+            }
         }
         return 0.0f;
     }
     private Float urgency_annotations() {
-        if (hasValue("tags")) {
+        if (hasValue("annotations")) {
             try {
                 JSONArray annotations = new JSONArray(getValue("annotations"));
                 switch(annotations.length()) {
@@ -240,7 +256,9 @@ public class Task {
                     case 2: return 0.9f;
                     default: return 1.0f;
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.e(TAG, "urgency_annotations Error");
+            }
         }
         return 0.0f;
     }
@@ -255,10 +273,7 @@ public class Task {
         return false;
     }
     public Boolean hasValue(String value) {
-        if(taskJson.has(value)) {
-            return true;
-        }
-        return false;
+        return taskJson.has(value);
     }
 
 
@@ -270,11 +285,11 @@ public class Task {
         return blocking;
     }
 
-    public void setBlocked(Boolean blocked) {
+    public void setBlocked(@SuppressWarnings("SameParameterValue") Boolean blocked) {
         this.blocked = blocked;
     }
 
-    public void setBlocking(Boolean blocking) {
+    public void setBlocking(@SuppressWarnings("SameParameterValue") Boolean blocking) {
         this.blocking = blocking;
     }
 

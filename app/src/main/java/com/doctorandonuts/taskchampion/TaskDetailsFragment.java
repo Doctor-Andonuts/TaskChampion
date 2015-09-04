@@ -1,15 +1,10 @@
 package com.doctorandonuts.taskchampion;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,31 +15,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.doctorandonuts.taskchampion.sync.TaskWarriorSync;
-import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskManager;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
 public class TaskDetailsFragment extends Fragment {
     private Task task;
     private TextView descriptionTextView;
-
-//    private OnFragmentInteractionListener mListener;
-
-    // TODO: Rename and change types and number of parameters
-    public static TaskDetailsFragment newInstance(String param1, String param2) {
-        TaskDetailsFragment fragment = new TaskDetailsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public TaskDetailsFragment() {
         // Required empty public constructor
@@ -55,6 +37,7 @@ public class TaskDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
+        assert getActivity().getActionBar() != null;
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Details");
@@ -175,7 +158,7 @@ public class TaskDetailsFragment extends Fragment {
 
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
                 sdf.setTimeZone(TimeZone.getTimeZone("est"));
 

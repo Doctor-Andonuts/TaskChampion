@@ -38,12 +38,14 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         final Msg sync = new Msg();
         sync.clear();
         final StringBuilder payload = new StringBuilder();
-        payload.append(syncKey + "\n");
+        payload.append(syncKey);
+        payload.append("\n");
 
         TaskManager taskManager = new TaskManager(_context);
         List<Task> taskList = taskManager.getBacklogData();
         for(Task task : taskList) {
-            payload.append(task.getJsonString() + "\n");
+            payload.append(task.getJsonString());
+            payload.append("\n");
         }
 //        String uuid = UUID.randomUUID().toString();
 //        payload.append("{\"description\":\"test\",\"entry\":\"20150825T175211Z\",\"status\":\"pending\",\"uuid\":\""+uuid+"\"}");
@@ -95,12 +97,9 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         // Checks for new sync key
         String newSyncKey = "";
         String[] splitData = payloadData.split("\n");
-        for(Integer i=0; i<splitData.length; i++) {
-            if(Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", splitData[i])) {
-                newSyncKey = splitData[i];
-                //Log.d(TAG, "NEW SYNC KEY #" + i + ": " + splitData[i]);
-            } else {
-                //Log.d(TAG, "#" + i + ": " + splitData[i]);
+        for (String split : splitData) {
+            if(Pattern.matches("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", split)) {
+                newSyncKey = split;
             }
         }
 
@@ -109,7 +108,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
             SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("syncKey", newSyncKey);
-            editor.commit();
+            editor.apply();
         }
 
         _taskListActivity.refreshTaskListFragment();

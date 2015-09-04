@@ -10,7 +10,7 @@ import java.util.Map;
 public class Msg {
     private final Map<String, String> _header = new HashMap<>(5);
     private String _payload;
-    private String TAG = "TaskWarriorSyncMSG";
+    //private String TAG = "TaskWarriorSyncMSG";
 
     public Msg() {
         this._payload = "";
@@ -45,9 +45,14 @@ public class Msg {
 
         final StringBuilder output = new StringBuilder();
         for (final Map.Entry<String, String> entry : this._header.entrySet()) {
-            output.append(entry.getKey() + ": " + entry.getValue() + '\n');
+            output.append(entry.getKey());
+            output.append(": ");
+            output.append(entry.getValue());
+            output.append('\n');
         }
-        output.append("\n\n" + this._payload + '\n');
+        output.append("\n\n");
+        output.append(this._payload);
+        output.append('\n');
         return output.toString();
     }
 

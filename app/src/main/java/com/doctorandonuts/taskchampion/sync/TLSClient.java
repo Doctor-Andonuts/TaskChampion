@@ -23,11 +23,11 @@ import android.annotation.SuppressLint;
 import android.util.Base64;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringBufferInputStream;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
@@ -81,11 +81,14 @@ public class TLSClient {
                 continue;
             }
             try {
+                String certPart = part.trim() + "\n-----END CERTIFICATE-----";
                 certs.add((X509Certificate) CertificateFactory.getInstance("X.509")
-                          .generateCertificate(new StringBufferInputStream(part.trim() + "\n-----END CERTIFICATE-----")));
+                          .generateCertificate(new ByteArrayInputStream(certPart.getBytes("UTF-8"))));
             } catch (final CertificateException e) {
                 Log.wtf(TAG, "parsing failed:" + part, e);
                 return certs;
+            } catch (Exception e) {
+                Log.wtf(TAG, "huh");
             }
         }
         return certs;
@@ -116,7 +119,7 @@ public class TLSClient {
     }
 
     private static byte[] parseDERFromPEM(final String pem,
-                                          final String beginDelimiter, final String endDelimiter)
+                                          @SuppressWarnings("SameParameterValue") final String beginDelimiter, @SuppressWarnings("SameParameterValue") final String endDelimiter)
     throws ParseException {
         String[] tokens = pem.split(beginDelimiter);
         if (tokens.length < 2) {
@@ -266,7 +269,7 @@ public class TLSClient {
 
             final List<X509Certificate> ROOT = generateCertificateFromPEM(root);
             final X509Certificate USER_CERT = (X509Certificate) CertificateFactory.getInstance("X.509")
-                                              .generateCertificate(new StringBufferInputStream(userCA));
+                                              .generateCertificate(new ByteArrayInputStream(userCA.getBytes("UTF-8")));
             final RSAPrivateKey USER_KEY = generatePrivateKeyFromPEM(userKey);
             final KeyStore trusted = KeyStore.getInstance(KeyStore
                                      .getDefaultType());
