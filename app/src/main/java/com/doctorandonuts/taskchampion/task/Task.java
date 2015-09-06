@@ -72,6 +72,71 @@ public class Task {
         }
         return value;
     }
+
+    public String getFormatedValue(String key) {
+        String value = "";
+        try {
+            value = taskJson.getString(key);
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+        }
+
+        String returnValue = "";
+        switch(key) {
+            case "tags":
+                try {
+                    JSONArray tags = new JSONArray(value);
+                    for (int i = 0; i < tags.length(); i++) {
+                        returnValue += tags.get(i) + ", ";
+                    }
+                    returnValue = returnValue.substring(0, returnValue.length()-2);
+
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+                break;
+            case "status":
+                returnValue = value.substring(0, 1).toUpperCase() + value.substring(1);
+                break;
+            case "due":
+            case "wait":
+            case "entry":
+            case "modified":
+            case "end":
+                try {
+                    sdf.setTimeZone(TimeZone.getTimeZone("est"));
+                    Date date = sdf.parse(value);
+
+                    SimpleDateFormat sdfFormat = new SimpleDateFormat("MMMM d, yyyy K:mm a", Locale.US);
+
+                    returnValue = sdfFormat.format(date);
+
+
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+
+                break;
+            case "priority":
+                switch(value) {
+                    case "L":
+                        returnValue = "Low";
+                        break;
+                    case "M":
+                        returnValue = "Medium";
+                        break;
+                    case "H":
+                        returnValue = "High";
+                        break;
+                }
+                break;
+            default:
+                returnValue = getValue(key);
+                break;
+        }
+
+        return returnValue;
+    }
     public void setValue(String key, String value) {
         try {
             taskJson.put(key, value);

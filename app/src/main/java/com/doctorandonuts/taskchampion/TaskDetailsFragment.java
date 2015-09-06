@@ -61,18 +61,18 @@ public class TaskDetailsFragment extends Fragment {
             }
         });
 
-        ((TextView) view.findViewById(R.id.statusText)).setText(task.getValue("status"));
-        ((TextView) view.findViewById(R.id.entryText)).setText(task.getValue("entry"));
-        ((TextView) view.findViewById(R.id.projectText)).setText(task.getValue("project"));
-        ((TextView) view.findViewById(R.id.dueText)).setText(task.getValue("due"));
-        ((TextView) view.findViewById(R.id.tagsText)).setText(task.getValue("tags"));
-        ((TextView) view.findViewById(R.id.endText)).setText(task.getValue("end"));
-        ((TextView) view.findViewById(R.id.waitText)).setText(task.getValue("wait"));
-        ((TextView) view.findViewById(R.id.annotationText)).setText(task.getValue("annotation"));
-        ((TextView) view.findViewById(R.id.priorityText)).setText(task.getValue("priority"));
-        ((TextView) view.findViewById(R.id.dependsText)).setText(task.getValue("depends"));
-        ((TextView) view.findViewById(R.id.modifiedText)).setText(task.getValue("modified"));
-        ((TextView) view.findViewById(R.id.uuidText)).setText(task.getValue("uuid"));
+        ((TextView) view.findViewById(R.id.statusText)).setText(task.getFormatedValue("status"));
+        ((TextView) view.findViewById(R.id.entryText)).setText(task.getFormatedValue("entry"));
+        ((TextView) view.findViewById(R.id.projectText)).setText(task.getFormatedValue("project"));
+        ((TextView) view.findViewById(R.id.dueText)).setText(task.getFormatedValue("due"));
+        ((TextView) view.findViewById(R.id.tagsText)).setText(task.getFormatedValue("tags"));
+        ((TextView) view.findViewById(R.id.endText)).setText(task.getFormatedValue("end"));
+        ((TextView) view.findViewById(R.id.waitText)).setText(task.getFormatedValue("wait"));
+        ((TextView) view.findViewById(R.id.annotationText)).setText(task.getFormatedValue("annotation"));
+        ((TextView) view.findViewById(R.id.priorityText)).setText(task.getFormatedValue("priority"));
+        ((TextView) view.findViewById(R.id.dependsText)).setText(task.getFormatedValue("depends"));
+        ((TextView) view.findViewById(R.id.modifiedText)).setText(task.getFormatedValue("modified"));
+        ((TextView) view.findViewById(R.id.uuidText)).setText(task.getFormatedValue("uuid"));
         ((TextView) view.findViewById(R.id.isBlockedText)).setText(task.isBlocked().toString());
         ((TextView) view.findViewById(R.id.isBlockingText)).setText(task.isBlocking().toString());
         super.onViewCreated(view, savedInstanceState);
