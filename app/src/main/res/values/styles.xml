@@ -16,12 +16,12 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
     <style name="details_fragment_line_left">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">130dp</item>
     </style>
     <style name="details_fragment_line_right">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">#FF000000</item>

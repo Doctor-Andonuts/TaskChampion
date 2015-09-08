@@ -3,7 +3,9 @@ package com.doctorandonuts.taskchampion;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +54,7 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         descriptionTextView = (TextView) view.findViewById(R.id.descriptionText);
         descriptionTextView.setText(task.getValue("description"));
         descriptionTextView.setOnClickListener(new View.OnClickListener() {
@@ -62,19 +65,44 @@ public class TaskDetailsFragment extends Fragment {
         });
 
         ((TextView) view.findViewById(R.id.statusText)).setText(task.getFormatedValue("status"));
-        ((TextView) view.findViewById(R.id.entryText)).setText(task.getFormatedValue("entry"));
+
+
         ((TextView) view.findViewById(R.id.projectText)).setText(task.getFormatedValue("project"));
+
+
         ((TextView) view.findViewById(R.id.dueText)).setText(task.getFormatedValue("due"));
-        ((TextView) view.findViewById(R.id.tagsText)).setText(task.getFormatedValue("tags"));
-        ((TextView) view.findViewById(R.id.endText)).setText(task.getFormatedValue("end"));
+
+
+        TextView tagsTextView = (TextView) view.findViewById(R.id.tagsText);
+        (view.findViewById(R.id.tagsLabel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTags();
+            }
+        });
+        tagsTextView.setText(task.getFormatedValue("tags"));
+        tagsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTags();
+            }
+        });
+
+
         ((TextView) view.findViewById(R.id.waitText)).setText(task.getFormatedValue("wait"));
         ((TextView) view.findViewById(R.id.annotationText)).setText(task.getFormatedValue("annotation"));
         ((TextView) view.findViewById(R.id.priorityText)).setText(task.getFormatedValue("priority"));
         ((TextView) view.findViewById(R.id.dependsText)).setText(task.getFormatedValue("depends"));
+
+
+        ((TextView) view.findViewById(R.id.entryText)).setText(task.getFormatedValue("entry"));
         ((TextView) view.findViewById(R.id.modifiedText)).setText(task.getFormatedValue("modified"));
-        ((TextView) view.findViewById(R.id.uuidText)).setText(task.getFormatedValue("uuid"));
+        ((TextView) view.findViewById(R.id.endText)).setText(task.getFormatedValue("end"));
         ((TextView) view.findViewById(R.id.isBlockedText)).setText(task.isBlocked().toString());
         ((TextView) view.findViewById(R.id.isBlockingText)).setText(task.isBlocking().toString());
+        ((TextView) view.findViewById(R.id.uuidText)).setText(task.getFormatedValue("uuid"));
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -107,40 +135,6 @@ public class TaskDetailsFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p/>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        public void onFragmentInteraction();
-//    }
 
     public void setTask(Task task) {
         this.task = task;
@@ -179,6 +173,11 @@ public class TaskDetailsFragment extends Fragment {
 
         AlertDialog alert = builder.create();
         alert.show();
-
     }
+
+    public void editTags() {
+        Toast.makeText(getActivity(), "THIS DOES NOTHING", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
