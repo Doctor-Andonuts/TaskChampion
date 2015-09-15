@@ -3,6 +3,8 @@ package com.doctorandonuts.taskchampion;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
@@ -75,6 +78,26 @@ public class TaskListFragment extends ListFragment {
         arrayAdapter.sort(taskComparator);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+        String context = sharedPref.getString("context", "none");
+        String contextString;
+        switch(context) {
+            case "none":
+                contextString = "None";
+                break;
+            case "home":
+                contextString = "Home";
+                break;
+            case "work":
+                contextString = "Work";
+                break;
+            default:
+                contextString = "None";
+                break;
+        }
+        TextView contextTextView = (TextView) getActivity().findViewById(R.id.contextTextView);
+        contextTextView.setText("Context: " + contextString);
     }
 
 
