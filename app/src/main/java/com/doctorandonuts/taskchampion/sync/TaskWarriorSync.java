@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
  */
 public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
+    private int numberOfTasksUploaded;
     private TaskListActivity _taskListActivity;
 
     private String TAG = "TaskWarriorSync";
@@ -43,6 +44,7 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
 
         TaskManager taskManager = new TaskManager(_context);
         List<Task> taskList = taskManager.getBacklogData();
+        numberOfTasksUploaded = taskList.size();
         for(Task task : taskList) {
             payload.append(task.getJsonString());
             payload.append("\n");
@@ -114,7 +116,10 @@ public class TaskWarriorSync extends AsyncTask<Void, Void, String> {
         _taskListActivity.refreshTaskListFragment();
 
         // -1 because one is the sync key, and not a task
-        Toast.makeText(_context, (splitData.length-1) + " changes proccessed", Toast.LENGTH_SHORT).show();
+        int numberOfTasksDownloaded = splitData.length - 1;
+
+
+        Toast.makeText(_context, numberOfTasksDownloaded + " tasks downloaded\n" + numberOfTasksUploaded + " tasks uploaded", Toast.LENGTH_SHORT).show();
 
 
         Log.d(TAG, "DONE");
