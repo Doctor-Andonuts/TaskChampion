@@ -114,6 +114,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
             return true;
         } else if (id == android.R.id.home) {
+            hideSoftKeyboard(findViewById(android.R.id.content));
             getFragmentManager().popBackStack();
             return true;
         }
