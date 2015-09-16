@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskManager;
+
+import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,7 +58,11 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        loadView(view);
+        super.onViewCreated(view, savedInstanceState);
+    }
 
+    private void loadView(View view) {
         descriptionTextView = (TextView) view.findViewById(R.id.descriptionText);
         descriptionTextView.setText(task.getValue("description"));
         descriptionTextView.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +109,7 @@ public class TaskDetailsFragment extends Fragment {
         ((TextView) view.findViewById(R.id.isBlockedText)).setText(task.isBlocked().toString());
         ((TextView) view.findViewById(R.id.isBlockingText)).setText(task.isBlocking().toString());
         ((TextView) view.findViewById(R.id.uuidText)).setText(task.getFormatedValue("uuid"));
-
-
-        super.onViewCreated(view, savedInstanceState);
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -179,38 +182,75 @@ public class TaskDetailsFragment extends Fragment {
     private void editTags() {
         AlertDialog dialog;
 
-        final CharSequence[] items = {"home", "computer","errand","purchase", "someday", "next"};
-        final ArrayList seletedItems = new ArrayList();
+        final CharSequence[] items = {"home","computer","errand","purchase","someday","next"};
+        final ArrayList<Integer> selectedItems = new ArrayList();
+
+        String currentTaskTagsString = task.getValue("tags");
+        boolean[] tagsSelected = new boolean[6];
+        if(currentTaskTagsString.contains("home")) {
+            tagsSelected[0] = true;
+            selectedItems.add(0);
+        } else { tagsSelected[0] = false; }
+        if(currentTaskTagsString.contains("computer")) {
+            tagsSelected[1] = true;
+            selectedItems.add(1);
+        } else { tagsSelected[1] = false; }
+        if(currentTaskTagsString.contains("errand")) {
+            tagsSelected[2] = true;
+            selectedItems.add(2);
+        } else { tagsSelected[2] = false; }
+        if(currentTaskTagsString.contains("purchase")) {
+            tagsSelected[3] = true;
+            selectedItems.add(3);
+        } else { tagsSelected[3] = false; }
+        if(currentTaskTagsString.contains("someday")) {
+            tagsSelected[4] = true;
+            selectedItems.add(4);
+        } else { tagsSelected[4] = false; }
+        if(currentTaskTagsString.contains("next")) {
+            tagsSelected[5] = true;
+            selectedItems.add(5);
+        } else { tagsSelected[5] = false; }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Select Tags");
-        // TODO: Load the current tags as pre-selected
-        builder.setMultiChoiceItems(items, null,
+
+        builder.setMultiChoiceItems(items, tagsSelected,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     // indexSelected contains the index of item (of which checkbox checked)
                     @Override
                     public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
                         if (isChecked) {
                             // If the user checked the item, add it to the selected items
-                            seletedItems.add(indexSelected);
-                        } else if (seletedItems.contains(indexSelected)) {
+                            selectedItems.add(indexSelected);
+                        } else if (selectedItems.contains(indexSelected)) {
                             // Else, if the item is already in the array, remove it
-                            seletedItems.remove(Integer.valueOf(indexSelected));
+                            selectedItems.remove(Integer.valueOf(indexSelected));
                         }
                     }
                 })
                 // Set the action buttons
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getActivity(), seletedItems.toString(), Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int id) {//selectedItems.get(selectedItems.indexOf(0));
+                        ArrayList tagsArrayList = new ArrayList();
+                        for (Integer selectedItem : selectedItems) {
+                            tagsArrayList.add(items[selectedItem]);
+                        }
+                        JSONArray tagsJsonArray = new JSONArray(tagsArrayList);
 
-                        // TODO: Save tag list into task (since it gets current tags, I don't have to get them
+                        task.setValue("tags", tagsJsonArray.toString());
+                        TaskManager taskManager = new TaskManager(getActivity());
+                        taskManager.addOrUpdateTask(task);
+
+                        // TODO: This needs to reload the details pane
+                        loadView(getView());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {}
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
                 });
 
         dialog = builder.create();//AlertDialog dialog; create like this outside onClick
