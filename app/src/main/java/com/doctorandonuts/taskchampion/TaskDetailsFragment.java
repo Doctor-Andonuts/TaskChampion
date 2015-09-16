@@ -21,6 +21,7 @@ import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskManager;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -141,7 +142,7 @@ public class TaskDetailsFragment extends Fragment {
     }
 
 
-    public void editDescription() {
+    private void editDescription() {
         // Creating and Building the Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Edit Descrption");
@@ -175,9 +176,43 @@ public class TaskDetailsFragment extends Fragment {
         alert.show();
     }
 
-    public void editTags() {
-        Toast.makeText(getActivity(), "THIS DOES NOTHING", Toast.LENGTH_SHORT).show();
+    private void editTags() {
+        AlertDialog dialog;
+        final CharSequence[] items = {"home", "computer","errand","purchase", "someday", "next"};
+        final ArrayList seletedItems = new ArrayList();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Select Tags");
+        // TODO: Load the current tags as pre-selected
+        builder.setMultiChoiceItems(items, null,
+                new DialogInterface.OnMultiChoiceClickListener() {
+                    // indexSelected contains the index of item (of which checkbox checked)
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                        if (isChecked) {
+                            // If the user checked the item, add it to the selected items
+                            seletedItems.add(indexSelected);
+                        } else if (seletedItems.contains(indexSelected)) {
+                            // Else, if the item is already in the array, remove it
+                            seletedItems.remove(Integer.valueOf(indexSelected));
+                        }
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(getActivity(), seletedItems.toString(), Toast.LENGTH_SHORT).show();
+
+                        // TODO: Save tag list into task (since it gets current tags, I don't have to get them
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {}
+                });
+
+        dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+        dialog.show();
     }
-
-
 }
