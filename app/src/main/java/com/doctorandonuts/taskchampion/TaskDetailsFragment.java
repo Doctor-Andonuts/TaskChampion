@@ -178,6 +178,7 @@ public class TaskDetailsFragment extends Fragment {
 
     private void editTags() {
         AlertDialog dialog;
+
         final CharSequence[] items = {"home", "computer","errand","purchase", "someday", "next"};
         final ArrayList seletedItems = new ArrayList();
 
