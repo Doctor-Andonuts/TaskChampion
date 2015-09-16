@@ -33,6 +33,7 @@ import java.util.TimeZone;
 public class TaskDetailsFragment extends Fragment {
     private Task task;
     private TextView descriptionTextView;
+//    TaskManager taskManager = new TaskManager(getActivity());
 
     public TaskDetailsFragment() {
         // Required empty public constructor
@@ -58,11 +59,11 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        loadView(view);
+        refreshDetailView(view);
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void loadView(View view) {
+    private void refreshDetailView(View view) {
         descriptionTextView = (TextView) view.findViewById(R.id.descriptionText);
         descriptionTextView.setText(task.getValue("description"));
         descriptionTextView.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +100,24 @@ public class TaskDetailsFragment extends Fragment {
 
         ((TextView) view.findViewById(R.id.waitText)).setText(task.getFormatedValue("wait"));
         ((TextView) view.findViewById(R.id.annotationText)).setText(task.getFormatedValue("annotation"));
-        ((TextView) view.findViewById(R.id.priorityText)).setText(task.getFormatedValue("priority"));
+
+
+        TextView priorityTextView = (TextView) view.findViewById(R.id.priorityText);
+        (view.findViewById(R.id.priorityLabel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editPriority();
+            }
+        });
+        priorityTextView.setText(task.getFormatedValue("priority"));
+        priorityTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editPriority();
+            }
+        });
+
+
         ((TextView) view.findViewById(R.id.dependsText)).setText(task.getFormatedValue("depends"));
 
 
@@ -179,11 +197,53 @@ public class TaskDetailsFragment extends Fragment {
         alert.show();
     }
 
+    private void editPriority() {
+        AlertDialog levelDialog;
+
+        // Strings to Show In Dialog with Radio Buttons
+        final CharSequence[] items = {"High","Medium","Low","None"};
+
+        // Creating and Building the Dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Select The Priority");
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                switch (item) {
+                    case 0:
+                        task.setValue("priority", "H");
+                        break;
+                    case 1:
+                        task.setValue("priority", "M");
+                        break;
+                    case 2:
+                        task.setValue("priority", "L");
+                        break;
+                    case 3:
+                        task.setValue("priority", "");
+                        break;
+                }
+                dialog.dismiss();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+                Date now = new Date();
+                sdf.setTimeZone(TimeZone.getTimeZone("est"));
+
+                task.setValue("modified", sdf.format(now));
+
+                TaskManager taskManager = new TaskManager(getActivity());
+                taskManager.addOrUpdateTask(task);
+                refreshDetailView(getView());
+            }
+        });
+        levelDialog = builder.create();
+        levelDialog.show();
+    }
+
     private void editTags() {
         AlertDialog dialog;
 
         final CharSequence[] items = {"home","computer","errand","purchase","someday","next"};
-        final ArrayList<Integer> selectedItems = new ArrayList();
+        final ArrayList<Integer> selectedItems = new ArrayList<>();
 
         String currentTaskTagsString = task.getValue("tags");
         boolean[] tagsSelected = new boolean[6];
@@ -232,18 +292,25 @@ public class TaskDetailsFragment extends Fragment {
                 // Set the action buttons
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {//selectedItems.get(selectedItems.indexOf(0));
-                        ArrayList tagsArrayList = new ArrayList();
+                    public void onClick(DialogInterface dialog, int id) {
+                        ArrayList<CharSequence> tagsArrayList = new ArrayList<>();
                         for (Integer selectedItem : selectedItems) {
                             tagsArrayList.add(items[selectedItem]);
                         }
                         JSONArray tagsJsonArray = new JSONArray(tagsArrayList);
 
                         task.setValue("tags", tagsJsonArray.toString());
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+                        Date now = new Date();
+                        sdf.setTimeZone(TimeZone.getTimeZone("est"));
+
+                        task.setValue("modified", sdf.format(now));
+
                         TaskManager taskManager = new TaskManager(getActivity());
                         taskManager.addOrUpdateTask(task);
 
-                        loadView(getView());
+                        refreshDetailView(getView());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
