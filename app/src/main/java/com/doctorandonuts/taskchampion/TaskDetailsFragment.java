@@ -243,7 +243,6 @@ public class TaskDetailsFragment extends Fragment {
                         TaskManager taskManager = new TaskManager(getActivity());
                         taskManager.addOrUpdateTask(task);
 
-                        // TODO: This needs to reload the details pane
                         loadView(getView());
                     }
                 })
