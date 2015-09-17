@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -56,6 +58,15 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         if (id == R.id.action_sync) {
             Log.d("TaskWarriorSync", "Attempting Sync...");
             Toast.makeText(getApplicationContext(), "Attempting Sync...", Toast.LENGTH_SHORT).show();
+
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo ni = cm.getActiveNetworkInfo();
+            if (ni == null) {
+                // There are no active networks.
+                Toast.makeText(this, "No connection to internet detected", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
 
             TaskWarriorSync taskWarriorSync = new TaskWarriorSync(this);
             taskWarriorSync.execute();
