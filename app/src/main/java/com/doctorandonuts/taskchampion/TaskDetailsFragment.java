@@ -299,7 +299,7 @@ public class TaskDetailsFragment extends Fragment {
                         }
                         JSONArray tagsJsonArray = new JSONArray(tagsArrayList);
 
-                        task.setValue("tags", tagsJsonArray.toString());
+                        task.setTags(tagsJsonArray);
 
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                         Date now = new Date();

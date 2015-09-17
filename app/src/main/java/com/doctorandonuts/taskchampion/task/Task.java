@@ -144,6 +144,13 @@ public class Task {
             Log.e(TAG, "setValue Error");
         }
     }
+    public void setTags(JSONArray tags) {
+        try {
+            taskJson.put("tags", tags);
+        } catch (Exception e) {
+            Log.e(TAG, "setValue Error");
+        }
+    }
 
     public void done() {
         try {
