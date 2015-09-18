@@ -147,9 +147,32 @@ public class TaskDetailsFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_done) {
-            task.done();
             TaskManager taskManager = new TaskManager(getActivity());
+
+            if(task.hasValue("relativeRecurDue") || task.hasValue("relativeRecurWait")) {
+                Task newRecurTask = task;
+                if(newRecurTask.hasValue("relativeRecurDue")) {
+                    // TODO: Take the relativeRecurDue and add the duration to the due
+                }
+                if(newRecurTask.hasValue("relativeRecurWait")) {
+                    // TODO: Take the relativeRecurwait and add the duration to the wait
+                }
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+                Date now = new Date();
+                sdf.setTimeZone(TimeZone.getTimeZone("est"));
+
+                newRecurTask.setValue("modified", sdf.format(now));
+                newRecurTask.setValue("entry", sdf.format(now));
+
+                taskManager.addOrUpdateTask(newRecurTask);
+            }
+
+            task.done();
             taskManager.addOrUpdateTask(task);
+
+
+
+
             getFragmentManager().popBackStack();
             Toast.makeText(getActivity(), "Marked done",Toast.LENGTH_SHORT).show();
             return true;
@@ -227,7 +250,6 @@ public class TaskDetailsFragment extends Fragment {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
                 sdf.setTimeZone(TimeZone.getTimeZone("est"));
-
                 task.setValue("modified", sdf.format(now));
 
                 TaskManager taskManager = new TaskManager(getActivity());
