@@ -9,4 +9,9 @@
         android:title="@string/action_done"
         android:orderInCategory="50"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/action_test"
+        android:title="Test Duration"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>

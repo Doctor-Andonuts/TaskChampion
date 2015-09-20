@@ -25,9 +25,12 @@ import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class TaskDetailsFragment extends Fragment {
@@ -151,7 +154,10 @@ public class TaskDetailsFragment extends Fragment {
 
             if(task.hasValue("relativeRecurDue") || task.hasValue("relativeRecurWait")) {
                 Task newRecurTask = task;
+
                 if(newRecurTask.hasValue("relativeRecurDue")) {
+
+
                     // TODO: Take the relativeRecurDue and add the duration to the due
                 }
                 if(newRecurTask.hasValue("relativeRecurWait")) {
@@ -176,6 +182,12 @@ public class TaskDetailsFragment extends Fragment {
             getFragmentManager().popBackStack();
             Toast.makeText(getActivity(), "Marked done",Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.action_test) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+            sdf.setTimeZone(TimeZone.getTimeZone("est"));
+            Calendar calendar = durationToCalendarTime("3d");
+
+            Toast.makeText(getActivity(), sdf.format(calendar.getTime()), Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -343,5 +355,166 @@ public class TaskDetailsFragment extends Fragment {
 
         dialog = builder.create();//AlertDialog dialog; create like this outside onClick
         dialog.show();
+    }
+
+
+    private Calendar durationToCalendarTime(String duration) {
+        Calendar calendar = Calendar.getInstance();
+
+        Pattern pattern = Pattern.compile("(\\d*) ?([a-zA-Z]+)");
+        Matcher matcher = pattern.matcher(duration);
+        if(matcher.find()) {
+            String numberString = matcher.group(1);
+            String text = matcher.group(2);
+
+            if(numberString.equals("")) {
+                switch (text) {
+                    case "second":
+                    case "sec":
+                        // 1 second
+                        calendar.add(Calendar.SECOND, 1);
+                        break;
+                    case "minutes":
+                    case "min":
+                        // 1 minute
+                        calendar.add(Calendar.MINUTE, 1);
+                        break;
+                    case "hour":
+                    case "hr":
+                        // 1 hour
+                        calendar.add(Calendar.HOUR, 1);
+                        break;
+                    case "daily":
+                    case "day":
+                        // 1 day
+                        calendar.add(Calendar.DATE, 1);
+                        break;
+                    case "weekyl":
+                    case "week":
+                    case "wk":
+                        // 1 week (7 days)
+                        calendar.add(Calendar.DATE, 7);
+                        break;
+                    case "weekdays":
+                        // 1 every weekday Monday to Friday
+                        // TODO: What?!?!
+                        break;
+                    case "biweekly":
+                    case "fortnight":
+                    case "sennight":
+                        // 14 days
+                        calendar.add(Calendar.DATE, 14);
+                        break;
+                    case "monthly":
+                    case "month":
+                    case "mth":
+                    case "mo":
+                        // 30 days / 1 month (imprecise)
+                        calendar.add(Calendar.MONTH, 1);
+                        break;
+                    case "bimonthly":
+                        // 61 days / 2 months (imprecise)
+                        calendar.add(Calendar.MONTH, 2);
+                        break;
+                    case "quarterly":
+                    case "quarter":
+                    case "qrtr":
+                    case "q":
+                        // 91 days / 3 months (imprecise)
+                        calendar.add(Calendar.MONTH, 3);
+                        break;
+                    case "semiannual":
+                        // 183 days / 6 months (imprecise)
+                        calendar.add(Calendar.MONTH, 6);
+                        break;
+                    case "annual":
+                    case "yearly":
+                    case "year":
+                    case "yr":
+                        // 365 days / 1 year (imprecise)
+                        calendar.add(Calendar.YEAR, 1);
+                        break;
+                    case "biannual":
+                    case "biyearly":
+                        // 730 days / 2 year (imprecise)
+                        calendar.add(Calendar.YEAR, 2);
+                        break;
+                }
+            } else {
+                int number = Integer.parseInt(numberString);
+                switch (text) {
+                    case "seconds":
+                    case "second":
+                    case "secs":
+                    case "sec":
+                    case "s":
+                        // seconds
+                        calendar.add(Calendar.SECOND, number);
+                        break;
+                    case "minutes":
+                    case "minute":
+                    case "mins":
+                    case "min":
+                        // minutes
+                        calendar.add(Calendar.MINUTE, number);
+                        break;
+                    case "hours":
+                    case "hour":
+                    case "hrs":
+                    case "h":
+                        // minutes
+                        calendar.add(Calendar.HOUR, number);
+                        break;
+                    case "days":
+                    case "day":
+                    case "d":
+                        // days
+                        calendar.add(Calendar.DATE, number);
+                        break;
+                    case "weeks":
+                    case "week":
+                    case "wks":
+                    case "wk":
+                    case "w":
+                        // weeks / 7 days
+                        calendar.add(Calendar.DATE, number * 7);
+                        break;
+                    case "fortnight":
+                    case "sennight":
+                        // 14 days
+                        calendar.add(Calendar.DATE, number * 14);
+                        break;
+                    case "months":
+                    case "month":
+                    case "mnths":
+                    case "mths":
+                    case "mth":
+                    case "mo":
+                    case "m":
+                        // 30 days / 1 month (imprecise)
+                        calendar.add(Calendar.MONTH, number);
+                        break;
+                    case "quarterly":
+                    case "quarters":
+                    case "quarter":
+                    case "qrtrs":
+                    case "qrtr":
+                    case "qtr":
+                    case "q":
+                        // 91 days / 3 months (imprecise)
+                        calendar.add(Calendar.MONTH, number * 3);
+                        break;
+                    case "years":
+                    case "year":
+                    case "yrs":
+                    case "yr":
+                    case "y":
+                        // 365 days / 1 year (imprecise)
+                        calendar.add(Calendar.YEAR, number);
+                        break;
+                }
+            }
+        }
+        return calendar;
     }
 }
