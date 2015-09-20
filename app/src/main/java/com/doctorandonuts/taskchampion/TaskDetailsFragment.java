@@ -22,6 +22,7 @@ import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskManager;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -153,15 +155,26 @@ public class TaskDetailsFragment extends Fragment {
             TaskManager taskManager = new TaskManager(getActivity());
 
             if(task.hasValue("relativeRecurDue") || task.hasValue("relativeRecurWait")) {
-                Task newRecurTask = task;
+                // I need to copy the old task to new, newTask = task does not work because it points to the same object in memory (copies the pointer)
+                Task newRecurTask = null;
+                try {
+                    newRecurTask = new Task(new JSONObject(task.getJsonString()));
+                    newRecurTask.setValue("uuid", UUID.randomUUID().toString());
+                } catch (Exception e) {
+                    Log.e("JSON", "PROBLEMS");
+                }
 
                 if(newRecurTask.hasValue("relativeRecurDue")) {
-
-
-                    // TODO: Take the relativeRecurDue and add the duration to the due
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+                    sdf.setTimeZone(TimeZone.getTimeZone("est"));
+                    Calendar calendar = durationToCalendarTime(newRecurTask.getValue("relativeRecurDue"));
+                    newRecurTask.setValue("due", sdf.format(calendar.getTime()));
                 }
                 if(newRecurTask.hasValue("relativeRecurWait")) {
-                    // TODO: Take the relativeRecurwait and add the duration to the wait
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+                    sdf.setTimeZone(TimeZone.getTimeZone("est"));
+                    Calendar calendar = durationToCalendarTime(newRecurTask.getValue("relativeRecurWait"));
+                    newRecurTask.setValue("wait", sdf.format(calendar.getTime()));
                 }
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
@@ -183,11 +196,7 @@ public class TaskDetailsFragment extends Fragment {
             Toast.makeText(getActivity(), "Marked done",Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.action_test) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
-            sdf.setTimeZone(TimeZone.getTimeZone("est"));
-            Calendar calendar = durationToCalendarTime("3d");
 
-            Toast.makeText(getActivity(), sdf.format(calendar.getTime()), Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
