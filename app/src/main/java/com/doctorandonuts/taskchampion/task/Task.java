@@ -165,6 +165,19 @@ public class Task {
         }
     }
 
+    public void delete() {
+        try {
+            Date now = new Date();
+            sdf.setTimeZone(TimeZone.getTimeZone("est"));
+
+            setValue("end", sdf.format(now));
+            setValue("modified", sdf.format(now));
+            setValue("status", "deleted");
+        } catch (Exception e) {
+            Log.e(TAG, "done Error");
+        }
+    }
+
     public String getJsonString() {
         return taskJson.toString();
     }

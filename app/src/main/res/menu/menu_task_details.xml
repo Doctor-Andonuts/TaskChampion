@@ -10,8 +10,8 @@
         android:orderInCategory="50"
         android:showAsAction="never" />
     <item
-        android:id="@+id/action_test"
-        android:title="Test Duration"
+        android:id="@+id/action_delete"
+        android:title="@string/action_delete"
         android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>

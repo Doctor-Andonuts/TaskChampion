@@ -189,14 +189,16 @@ public class TaskDetailsFragment extends Fragment {
             task.done();
             taskManager.addOrUpdateTask(task);
 
-
-
-
             getFragmentManager().popBackStack();
             Toast.makeText(getActivity(), "Marked done",Toast.LENGTH_SHORT).show();
             return true;
-        } else if (id == R.id.action_test) {
+        } else if (id == R.id.action_delete) {
+            TaskManager taskManager = new TaskManager(getActivity());
+            task.delete();
+            taskManager.addOrUpdateTask(task);
 
+            getFragmentManager().popBackStack();
+            Toast.makeText(getActivity(), "Marked deleted",Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
