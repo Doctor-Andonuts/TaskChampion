@@ -175,6 +175,7 @@ public class TaskDetailsFragment extends Fragment {
                     sdf.setTimeZone(TimeZone.getTimeZone("est"));
                     Calendar calendar = durationToCalendarTime(newRecurTask.getValue("relativeRecurWait"));
                     newRecurTask.setValue("wait", sdf.format(calendar.getTime()));
+                    newRecurTask.setValue("status", "waiting");
                 }
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
