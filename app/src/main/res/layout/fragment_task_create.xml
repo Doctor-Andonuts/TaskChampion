@@ -13,13 +13,22 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:labelFor="@+id/editDescription"
-            android:text="@string/details_description"/>
+            android:text="@string/details_description" />
         <EditText
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/editDescription"
             android:inputType="text"
             android:layout_gravity="start|top" />
+    </LinearLayout>
+    <LinearLayout style="@style/details_fragment_line">
+        <TextView
+            style="@style/details_fragment_line_left"
+            android:text="@string/details_tags"
+            android:id="@+id/createTagsLabel" />
+        <TextView
+            style="@style/details_fragment_line_right"
+            android:id="@+id/createTagsText" />
     </LinearLayout>
     <Button
         android:layout_width="100dp"

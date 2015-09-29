@@ -176,6 +176,8 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
         hideSoftKeyboard(view);
 
         TextView editDescription = (TextView) findViewById(R.id.editDescription);
+        TextView tagsTextView = (TextView) findViewById(R.id.createTagsText);
+
         JSONObject newTaskJson = new JSONObject();
 
         try {
@@ -187,11 +189,15 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             newTaskJson.put("uuid", uuid);
             newTaskJson.put("entry", sdf.format(now));
             newTaskJson.put("description", editDescription.getText());
+            newTaskJson.put("tags", tagsTextView.getText());
+            Log.d("CreateTest", tagsTextView.getText().toString());
+
         } catch(Exception e) {
-            Log.e("Activity", "I DONT KNOW");
+            Log.e("CreateTest", "I DONT KNOW" + e.toString());
         }
 
         Task newTask = new Task(newTaskJson);
+        Log.d("CreateTest", newTaskJson.toString());
 
         TaskManager taskManager = new TaskManager(getBaseContext());
         taskManager.addOrUpdateTask(newTask);

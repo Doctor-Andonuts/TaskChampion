@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 public class TaskDetailsFragment extends Fragment {
     private Task task;
     private TextView descriptionTextView;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
 //    TaskManager taskManager = new TaskManager(getActivity());
 
     public TaskDetailsFragment() {
