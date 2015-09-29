@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 public class TaskDetailsFragment extends Fragment {
     private Task task;
     private TextView descriptionTextView;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
 //    TaskManager taskManager = new TaskManager(getActivity());
 
     public TaskDetailsFragment() {
@@ -165,19 +166,16 @@ public class TaskDetailsFragment extends Fragment {
                 }
 
                 if(newRecurTask.hasValue("relativeRecurDue")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                     sdf.setTimeZone(TimeZone.getTimeZone("est"));
                     Calendar calendar = durationToCalendarTime(newRecurTask.getValue("relativeRecurDue"));
                     newRecurTask.setValue("due", sdf.format(calendar.getTime()));
                 }
                 if(newRecurTask.hasValue("relativeRecurWait")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                     sdf.setTimeZone(TimeZone.getTimeZone("est"));
                     Calendar calendar = durationToCalendarTime(newRecurTask.getValue("relativeRecurWait"));
                     newRecurTask.setValue("wait", sdf.format(calendar.getTime()));
                     newRecurTask.setValue("status", "waiting");
                 }
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
                 sdf.setTimeZone(TimeZone.getTimeZone("est"));
 
@@ -221,7 +219,6 @@ public class TaskDetailsFragment extends Fragment {
 
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
                 sdf.setTimeZone(TimeZone.getTimeZone("est"));
 
@@ -271,7 +268,6 @@ public class TaskDetailsFragment extends Fragment {
                 }
                 dialog.dismiss();
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                 Date now = new Date();
                 sdf.setTimeZone(TimeZone.getTimeZone("est"));
                 task.setValue("modified", sdf.format(now));
@@ -347,7 +343,6 @@ public class TaskDetailsFragment extends Fragment {
 
                         task.setTags(tagsJsonArray);
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                         Date now = new Date();
                         sdf.setTimeZone(TimeZone.getTimeZone("est"));
 

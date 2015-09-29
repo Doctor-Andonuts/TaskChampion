@@ -33,6 +33,7 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
 
 
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +180,6 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
 
         try {
             String uuid = UUID.randomUUID().toString();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
             Date now = new Date();
             sdf.setTimeZone(TimeZone.getTimeZone("est"));
 

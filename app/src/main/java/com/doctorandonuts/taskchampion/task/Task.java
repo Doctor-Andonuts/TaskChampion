@@ -21,6 +21,7 @@ public class Task {
 
     private Float urgency;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
+    SimpleDateFormat sdfDisplay = new SimpleDateFormat("MMMM d, yyyy K:mm a", Locale.US);
 
     public Task(JSONObject taskJson) {
         this.taskJson = taskJson;
@@ -107,9 +108,7 @@ public class Task {
                     sdf.setTimeZone(TimeZone.getTimeZone("est"));
                     Date date = sdf.parse(value);
 
-                    SimpleDateFormat sdfFormat = new SimpleDateFormat("MMMM d, yyyy K:mm a", Locale.US);
-
-                    returnValue = sdfFormat.format(date);
+                    returnValue = sdfDisplay.format(date);
 
 
                 } catch (Exception e) {

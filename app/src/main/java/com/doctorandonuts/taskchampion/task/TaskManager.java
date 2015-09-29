@@ -25,6 +25,7 @@ public class TaskManager {
     private static final String PENDING_FILENAME = "pending.data";
     private static final String BACKLOG_FILENAME = "backlog.data";
     private Context _context;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
 
     public TaskManager(Context context)
     {
@@ -185,7 +186,6 @@ public class TaskManager {
                         completedTaskList.put(taskUuid, task);
                     }
                 } else {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                     Date oldTaskModified = sdf.parse(oldTask.getValue("modified"));
                     Date parseTaskModified = sdf.parse(task.getValue("modified"));
                     if (parseTaskModified.getTime() - oldTaskModified.getTime() > 0) {
@@ -228,7 +228,6 @@ public class TaskManager {
                 // I assume everything coming from a file is only 1 uuid per so I can just add them.
                 if(task.getValue("status").equals("waiting")) {
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'kkmmss'Z'", Locale.US);
                     Date taskWaitDate = sdf.parse(task.getValue("wait"));
                     Date now = new Date();
                     if( now.getTime() - taskWaitDate.getTime() > 0) {
