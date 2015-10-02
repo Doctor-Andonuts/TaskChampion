@@ -20,6 +20,7 @@ import com.doctorandonuts.taskchampion.task.CustomArrayAdapter;
 import com.doctorandonuts.taskchampion.task.Task;
 import com.doctorandonuts.taskchampion.task.TaskManager;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -189,15 +190,19 @@ public class TaskListActivity extends Activity implements TaskListFragment.OnFra
             newTaskJson.put("uuid", uuid);
             newTaskJson.put("entry", sdf.format(now));
             newTaskJson.put("description", editDescription.getText());
-            newTaskJson.put("tags", tagsTextView.getText());
-            Log.d("CreateTest", tagsTextView.getText().toString());
-
         } catch(Exception e) {
             Log.e("CreateTest", "I DONT KNOW" + e.toString());
         }
 
         Task newTask = new Task(newTaskJson);
-        Log.d("CreateTest", newTaskJson.toString());
+        try {
+            JSONArray tags = new JSONArray(tagsTextView.getText().toString());
+            newTask.setTags(tags);
+        } catch (Exception e) {
+            Log.d("CreateTest Error: ", e.toString());
+        }
+
+        Log.d("CreateTest", newTask.getJsonString());
 
         TaskManager taskManager = new TaskManager(getBaseContext());
         taskManager.addOrUpdateTask(newTask);
